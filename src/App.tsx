@@ -8,7 +8,8 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Welcome to Jeff's World! 
+          This is a test of the React App running in a Docker container.
         </p>
         <a
           className="App-link"
