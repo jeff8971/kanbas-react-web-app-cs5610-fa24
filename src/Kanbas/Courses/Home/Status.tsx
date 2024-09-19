@@ -1,33 +1,19 @@
 export default function CourseStatus() {
   return (
-    <div id="wd-course-status">
+    <div id="wd-course-status" style={{ maxWidth: "200px" }}>
       <h2>Course Status</h2>
-      <div>
-        <button>Unpublish</button>
-        <button>Publish</button>
+      <div style={{ display: "flex", gap: "10px" }}>
+          <button>Unpublish</button>
+          <button>Publish  </button>
       </div>
-      <br />
-      <div>
-        <button>Import Existing Content</button>
-      </div>
-      <div>
-        <button>Import from Commons</button>
-      </div>
-      <div>
-        <button>Choose Home Page</button>
-      </div>
-      <div>
-        <button>View Course Stream</button>
-      </div>
-      <div>
-        <button>New Announcement</button>
-      </div>
-      <div>
-        <button>New Analytics</button>
-      </div>
-      <div>
-        <button>View Course Notifications</button>
+      <div style={{ marginTop: "10px", display: "flex", alignItems: "flex-start", flexDirection: "column", gap: "2px" }}>
+          <button>Import Existing Content</button>
+          <button>Import from Commons</button>
+          <button>Choose Home Page</button>
+          <button>View Course Stream</button>
+          <button>New Announcement</button>
+          <button>New Analytics</button>
+          <button>View Course Notifications</button>
       </div>
     </div>
-  );
-}
+);}
