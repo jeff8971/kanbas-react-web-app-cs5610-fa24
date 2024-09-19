@@ -2,15 +2,17 @@ export default function Modules() {
   return (
       <div>
           {/* Collapse All button, View Progress button, etc. */}
+          <div style={{ marginBottom: "20px" }}>
           <button>Collapse All</button>
           <button>View Progress</button>
-              <select id="wd-select-one-choice">
-                  <option value="ONE">Publish 1</option>
-                  <option value="TWO">Publish 2</option>
-                  <option selected value="Tree">Publish All</option>
-                  <option value="FOUR">Publish 4</option>
+              <select id="wd-select-week-choice">
+                  <option value="ONE">Publish Week 1</option>
+                  <option value="TWO">Publish Week 2</option>
+                  <option selected value="THREE">Publish All</option>
               </select>
           <button>+ Module</button>
+          </div>
+          {/* Modules */}
           <ul id="wd-modules">
               <li className="wd-module">
                   <div className="wd-title">Week 1, Lecture 1 - Course Introduction, Syllabus, Agenda</div>

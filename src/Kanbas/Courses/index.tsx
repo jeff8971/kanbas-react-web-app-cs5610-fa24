@@ -5,7 +5,7 @@ import { Navigate, Route, Routes } from "react-router";
 export default function Courses() {
   return (
     <div id="wd-courses">
-      <h2>Course 1234</h2>
+      <h2>Course 5610</h2>
       <hr />
       <table>
         <tr>
