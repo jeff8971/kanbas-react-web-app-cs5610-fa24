@@ -13,7 +13,7 @@ export default function Dashboard() {
             CS1234 React JS
           </Link>
           <p className="wd-dashboard-course-title">
-          Full Stack software developer
+            Full Stack software developer
           </p>
           <Link to="/Kanbas/Courses/1234/Home"> Go </Link>
         </div>
