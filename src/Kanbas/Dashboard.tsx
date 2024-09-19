@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses (8)</h2> <hr />
+      <h2 id="wd-dashboard-published">Published Courses (12)</h2> <hr />
       <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/1234/Home">
-            <img src="images/react.png" width={200} alt="React Course" />
+            <img src="images/reactjs.jpg" width={200} alt="ReactJS Course" />
             <div>
               <h5>CS1234</h5>
               <p className="wd-dashboard-course-title">Full Stack Software Developer</p>
@@ -15,72 +15,46 @@ export default function Dashboard() {
             </div>
           </Link>
         </div>
+
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/2345/Home">
-            <img src="images/sql.png" width={200} alt="SQL Course" />
+            <img src="images/nodejs.png" width={200} alt="Node.js Course" />
             <div>
               <h5>CS2345</h5>
-              <p className="wd-dashboard-course-title">Database Management</p>
+              <p className="wd-dashboard-course-title">Backend Development with Node.js</p>
               <button> Go </button>
             </div>
           </Link>
         </div>
+
         <div className="wd-dashboard-course">
           <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/3456/Home">
-            <img src="images/algo.png" width={200} alt="Algorithms Course" />
+            <img src="images/angular.png" width={200} alt="Angular Course" />
             <div>
               <h5>CS3456</h5>
-              <p className="wd-dashboard-course-title">Algorithms</p>
+              <p className="wd-dashboard-course-title">Frontend Development with Angular</p>
               <button> Go </button>
             </div>
           </Link>
         </div>
+
         <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/1000/Home">
-            <img src="images/ai.png" width={200} alt="Artificial Intelligence Course" />
+          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/4567/Home">
+            <img src="images/python.png" width={200} alt="Python for Data Science Course" />
             <div>
-              <h5>CS1000</h5>
-              <p className="wd-dashboard-course-title">Artificial Intelligence</p>
+              <h5>CS4567</h5>
+              <p className="wd-dashboard-course-title">Python for Data Science</p>
               <button> Go </button>
             </div>
           </Link>
         </div>
+
         <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5299/Home">
-            <img src="images/ml.png" width={200} alt="Machine Learning Course" />
+          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5678/Home">
+            <img src="images/mongodb.png" width={200} alt="MongoDB Course" />
             <div>
-              <h5>CS5299</h5>
-              <p className="wd-dashboard-course-title">Introduction to Machine Learning</p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5004/Home">
-            <img src="images/oop.jpg" width={200} alt="Object-Oriented Programming Course" />
-            <div>
-              <h5>CS5004</h5>
-              <p className="wd-dashboard-course-title">Object-Oriented Programming</p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5690/Home">
-            <img src="images/security.jpg" width={200} alt="Cybersecurity Course" />
-            <div>
-              <h5>CS5690</h5>
-              <p className="wd-dashboard-course-title">Cybersecurity</p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5001/Home">
-            <img src="images/python.png" width={200} alt="Introduction to Programming Course" />
-            <div>
-              <h5>CS5001</h5>
-              <p className="wd-dashboard-course-title">Introduction to Programming</p>
+              <h5>CS5678</h5>
+              <p className="wd-dashboard-course-title">NoSQL Databases with MongoDB</p>
               <button> Go </button>
             </div>
           </Link>
