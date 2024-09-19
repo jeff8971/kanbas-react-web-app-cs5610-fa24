@@ -24,4 +24,4 @@ export default function Account() {
     </tr>
     </table>
   </div>
-  );}
+);}
