@@ -138,3 +138,11 @@ p#wd-id-selector-2 {
   margin: 30px;
 
 }
+
+.wd-rounded-corners-top {
+
+  border-top-left-radius: 40px;
+
+  border-top-right-radius: 40px;
+
+}
