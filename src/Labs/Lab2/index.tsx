@@ -1,6 +1,6 @@
 import "./index.css"
-import "./ForegroundColors"
 import ForegroundColors from "./ForegroundColors";
+import BackgroundColors from "./BackgroundColors";
 export default function Lab2() {
   return (
   <div id="wd-lab2">
@@ -44,6 +44,7 @@ export default function Lab2() {
         </div>
 
         <ForegroundColors />
+        <BackgroundColors />
       </div>
       </div>
   </div>
