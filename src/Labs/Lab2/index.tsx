@@ -25,6 +25,23 @@ export default function Lab2() {
         This heading has same style as paragraph above
       </h4>
     </div>
+    <div id="wd-css-document-strucutre">
+      <div className="wd-selector-1">
+        <h3>Document Structure selectors</h3>
+        <div className="wd-selector-2">
+          Selectors can be combined to refer elements in particular place in the document
+          <p className="wd-selector-3">
+            This paragraph's red background is referenced <br />
+            .selector-2 .selector-3<br />
+            meaning the descendant of some ancestor.<br />
+            <span className="wd-selector-4">
+              Whereas this span is a direct child of its parent
+            </span><br />
+            You can combine these relationships to create specific styles depending on the document structure
+          </p>
+        </div>
+      </div>
+      </div>
   </div>
   );
 }
