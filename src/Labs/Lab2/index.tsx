@@ -7,6 +7,15 @@ export default function Lab2() {
     <p>
       Style attribute allows configuring look and feel right on the element. Although it's very convenient it is considered bad practice and you should avoidusing the style attribute
     </p>
+    <div id="wd-css-id-selectors">
+      <h3>ID selectors</h3>
+      <p id="wd-id-selector-1">
+        Instead fo changing the look and fell of all the elements of the same name, e.g., P. we can refer to a specific element by its ID
+      </p>
+      <p id="wd-id-selector-2">
+        Here's another paragraph using a different ID and a different look and feel
+      </p>
+    </div>
   </div>
   );
 }
