@@ -1,4 +1,6 @@
 import "./index.css"
+import "./ForegroundColors"
+import ForegroundColors from "./ForegroundColors";
 export default function Lab2() {
   return (
   <div id="wd-lab2">
@@ -40,6 +42,8 @@ export default function Lab2() {
             You can combine these relationships to create specific styles depending on the document structure
           </p>
         </div>
+
+        <ForegroundColors />
       </div>
       </div>
   </div>
