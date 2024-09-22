@@ -4,18 +4,16 @@
 
  color: white;}*/
 
- p#wd-id-selector-1 {
+p#wd-id-selector-1 {
 
   background-color: red;
  
-  color: white;
+  color: white;}
  
- }
- 
- p#wd-id-selector-2 {
- 
+p#wd-id-selector-2 {
   background-color: yellow;
- 
-  color: black;
- 
- }
+  color: black;}
+
+.wd-class-selector {
+    background-color: yellow;
+    color: blue;}
