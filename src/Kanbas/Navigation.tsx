@@ -44,7 +44,7 @@ export default function KanbasNavigation() {
       <br />
 
       <Link
-        to="/Kanbas/Couses"
+        to="/Kanbas/Courses"
         id="wd-course-link"
         className="list-group-item text-white bg-black text-center border-0"
       >
@@ -53,13 +53,40 @@ export default function KanbasNavigation() {
         Courses
       </Link>
       <br />
+      
       <Link 
         to="/Kanbas/Calendar" 
         id="wd-calendar-link"
         className="list-group-item text-white bg-black text-center border-0"
-        >Calendar</Link><br/>
-      <Link to="/Kanbas/Inbox" id="wd-inbox-link">Inbox</Link><br/>
-      <Link to="/Labs" id="wd-labs-link">Labs</Link><br/>
+        >
+        <IoCalendarOutline className="fs-1 text-danger" />
+        <br />
+        Calendar
+      </Link>
+      <br/>
+      
+      <Link
+        to="/Kanbas/Inbox"
+        id="wd-inbox-link"
+        className="list-group-item text-white bg-black text-center border-0"
+      >
+        <FaInbox className="fs-1 text-danger" />
+        <br />
+        Inbox
+      </Link>
+      <br/>
+
+      <Link 
+        to="/Kanbas/Dashboard" 
+        id="wd-labs-link"
+        className="list-group-item text-white bg-black text-center border-0"
+      >
+        <LiaCogSolid className="fs-1 text-danger"/>
+        <br/>
+        Labs 
+      </Link>
+      <br/>
+      
     </div>
   );
 }
