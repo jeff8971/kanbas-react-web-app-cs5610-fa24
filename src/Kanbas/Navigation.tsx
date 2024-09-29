@@ -44,7 +44,7 @@ export default function KanbasNavigation() {
       <br />
 
       <Link
-        to="/Kanbas/Dashboard"
+        to="/Kanbas/Couses"
         id="wd-course-link"
         className="list-group-item text-white bg-black text-center border-0"
       >
@@ -53,7 +53,11 @@ export default function KanbasNavigation() {
         Courses
       </Link>
       <br />
-      <Link to="/Kanbas/Calendar" id="wd-calendar-link">Calendar</Link><br/>
+      <Link 
+        to="/Kanbas/Calendar" 
+        id="wd-calendar-link"
+        className="list-group-item text-white bg-black text-center border-0"
+        >Calendar</Link><br/>
       <Link to="/Kanbas/Inbox" id="wd-inbox-link">Inbox</Link><br/>
       <Link to="/Labs" id="wd-labs-link">Labs</Link><br/>
     </div>
