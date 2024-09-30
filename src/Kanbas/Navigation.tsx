@@ -86,7 +86,7 @@ export default function KanbasNavigation() {
         Labs 
       </Link>
       <br/>
-      
+
     </div>
   );
 }

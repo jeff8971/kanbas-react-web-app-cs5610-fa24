@@ -1,63 +1,171 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses (12)</h2> <hr />
-      <div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/1234/Home">
-            <img src="images/reactjs.jpg" width={200} alt="ReactJS Course" />
-            <div>
-              <h5>CS1234</h5>
-              <p className="wd-dashboard-course-title">Full Stack Software Developer</p>
-              <button> Go </button>
-            </div>
-          </Link>
-        </div>
+      <h1 id="wd-dashboard-title">Dashboard</h1> 
+      <hr />
+      <h2 id="wd-dashboard-published">Published Courses (12)</h2> 
+      <hr />
+      <div id="wd-dashboard-courses" className="row">
+        <div className="row row-cols-1 row-cols-md-5 g-4">
 
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/2345/Home">
-            <img src="images/nodejs.png" width={200} alt="Node.js Course" />
-            <div>
-              <h5>CS2345</h5>
-              <p className="wd-dashboard-course-title">Backend Development with Node.js</p>
-              <button> Go </button>
+          {/* ReactJS Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/1234/Home"
+              >
+                <img src="images/reactjs.jpg" width="100%" height={160} alt="ReactJS Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS1234 React JS
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Full Stack Software Developer
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </div>
 
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/3456/Home">
-            <img src="images/angular.png" width={200} alt="Angular Course" />
-            <div>
-              <h5>CS3456</h5>
-              <p className="wd-dashboard-course-title">Frontend Development with Angular</p>
-              <button> Go </button>
+          {/* Node.js Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/1235/Home"
+              >
+                <img src="/images/nodejs.png" width="100%" height={160} alt="Node.js Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS1235 Node JS
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Backend Development
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </div>
 
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/4567/Home">
-            <img src="images/python.png" width={200} alt="Python for Data Science Course" />
-            <div>
-              <h5>CS4567</h5>
-              <p className="wd-dashboard-course-title">Python for Data Science</p>
-              <button> Go </button>
+          {/* Python Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/1236/Home"
+              >
+                <img src="/images/python.png" width="100%" height={160} alt="Python Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS1236 Python
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Data Science
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
+          </div>
 
-        <div className="wd-dashboard-course">
-          <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/5678/Home">
-            <img src="images/mongodb.png" width={200} alt="MongoDB Course" />
-            <div>
-              <h5>CS5678</h5>
-              <p className="wd-dashboard-course-title">NoSQL Databases with MongoDB</p>
-              <button> Go </button>
+          {/* Angular Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/3456/Home"
+              >
+                <img src="images/angular.png" width="100%" height={160} alt="Angular Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS3456 Angular
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Frontend Development
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
             </div>
-          </Link>
+          </div>
+
+          {/* Java Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/1237/Home"
+              >
+                <img src="/images/java.png" width="100%" height={160} alt="Java Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS1237 Java
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Object-Oriented Programming
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+ 
+
+          {/* MongoDB Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/5678/Home"
+              >
+                <img src="images/mongodb.png" width="100%" height={160} alt="MongoDB Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS5678 MongoDB
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    NoSQL Databases with MongoDB
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Kotlin Course */}
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
+            <div className="card rounded-3 overflow-hidden">
+              <Link
+                className="wd-dashboard-course-link text-decoration-none text-dark"
+                to="/Kanbas/Courses/1241/Home"
+              >
+                <img src="/images/kotlin.png" width="100%" height={160} alt="Kotlin Course" />
+                <hr />
+                <div className="card-body">
+                  <h5 className="wd-dashboard-course-title card-title">
+                    CS1241 Kotlin
+                  </h5>
+                  <p className="wd-dashboard-course-title card-text">
+                    Android Development
+                  </p>
+                  <button className="btn btn-primary"> Go </button>
+                </div>
+              </Link>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
