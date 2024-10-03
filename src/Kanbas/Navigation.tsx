@@ -84,7 +84,7 @@ export default function KanbasNavigation() {
 
       {/* Labs Link */}
       <Link
-        to="/Kanbas/Labs"
+        to="/Labs"
         id="wd-labs-link"
         className="list-group-item text-center border-0 bg-black text-white"
       >
