@@ -1,7 +1,7 @@
 import { RxCross2 } from "react-icons/rx";
 import "./index.css";
 
-const AssignmentEditor = () => {
+export default function AssignmentEditor() {
   const assignmentDescription = `
   This assignment is available online.
   
@@ -225,4 +225,3 @@ const AssignmentEditor = () => {
   );
 };
 
-export default AssignmentEditor;

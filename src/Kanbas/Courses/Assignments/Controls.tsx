@@ -1,7 +1,7 @@
 import { FaPlus } from "react-icons/fa6";
 import { GoSearch }  from "react-icons/go";
 
-const AssignmentsControls = () => {
+export default function AssignmentsControls() {
   return (
     <div id="wd-assignments-controls" className="text-nowrap d-flex justify-content-between align-items-center assignments-controls-container mb-4">
       <div className="h-100 border rounded d-flex flex-row justify-content-center align-items-center w-50">
@@ -27,4 +27,4 @@ const AssignmentsControls = () => {
   );
 };
 
-export default AssignmentsControls;
+

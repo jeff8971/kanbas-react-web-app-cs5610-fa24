@@ -1,15 +1,15 @@
 import { BsGripVertical } from "react-icons/bs";
-import AssignmentsControls from "./Controls";
-import AssignmentsTitleBarControlButtons from "./TitleButtons";
+import Controls from "./Controls";
+import TitleButtons from "./TitleButtons";
 import "./index.css";
 import LessonControlButtons from "../Modules/LessonControlButtons";
-import AssignmentLeftControls from "./LeftControls";
+import LeftControls from "./LeftControls";
 
-const Assignments = () => {
+export default function Assignments() {
   return (
     <div id="wd-assignments" className="container mt-4">
       {/* Assignment Control Buttons */}
-      <AssignmentsControls />
+      <Controls />
 
       <ul id="wd-container" className="list-group rounded-0">
         {/* Assignment Group Title */}
@@ -22,7 +22,7 @@ const Assignments = () => {
               <BsGripVertical className="me-2 fs-4" />
               <p className="m-0 fw-bold">ASSIGNMENTS</p>
             </div>
-            <AssignmentsTitleBarControlButtons />
+            <TitleButtons />
           </div>
 
           {/* List of Assignments */}
@@ -30,7 +30,7 @@ const Assignments = () => {
             {/* Assignment 1 */}
             <li className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center">
               <div className="d-flex justify-content-center align-items-center">
-                <AssignmentLeftControls />
+                <LeftControls />
                 <div className="my-2 mx-4">
                   <a
                     href="#/Kanbas/Courses/1234/Assignments/A1"
@@ -53,7 +53,7 @@ const Assignments = () => {
             {/* Assignment 2 */}
             <li className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center">
               <div className="d-flex justify-content-center align-items-center">
-                <AssignmentLeftControls />
+                <LeftControls />
                 <div className="my-2 mx-4">
                   <a
                     href="#/Kanbas/Courses/1234/Assignments/A2"
@@ -76,7 +76,7 @@ const Assignments = () => {
             {/* Assignment 3 */}
             <li className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center">
               <div className="d-flex justify-content-center align-items-center">
-                <AssignmentLeftControls />
+                <LeftControls />
                 <div className="my-2 mx-4">
                   <a
                     href="#/Kanbas/Courses/1234/Assignments/A3"
@@ -101,5 +101,3 @@ const Assignments = () => {
     </div>
   );
 };
-
-export default Assignments;

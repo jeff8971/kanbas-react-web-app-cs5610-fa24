@@ -4,7 +4,7 @@ import Signup from "./Signup";
 import Profile from "./Profile";
 import AccountNavigation from "./Navigation";
 
-const Account = () => {
+export default function Account() {
   return (
     <div id="wd-account-screen">
       <h2>Account</h2>
@@ -39,4 +39,3 @@ const Account = () => {
   );
 };
 
-export default Account;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Profile = () => {
+export default function Profile() {
   return (
     <div id="wd-profile-screen" style={{ width: "400px" }}>
       <h1>Profile</h1>
@@ -61,4 +61,3 @@ const Profile = () => {
   );
 };
 
-export default Profile;

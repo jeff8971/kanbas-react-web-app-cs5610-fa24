@@ -1,7 +1,7 @@
 import { BsGripVertical } from "react-icons/bs";
 import { MdOutlineAssignment } from "react-icons/md";
 
-const AssignmentLeftControls = () => {
+export default function LeftControls(){
   return (
     <div>
       <BsGripVertical className="me-2 fs-4 text-secondary" />
@@ -10,4 +10,3 @@ const AssignmentLeftControls = () => {
   );
 };
 
-export default AssignmentLeftControls;
