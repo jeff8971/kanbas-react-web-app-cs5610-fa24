@@ -1,21 +1,15 @@
+import { useParams, Link } from "react-router-dom";
+import * as db from "../../Database"; // Assuming assignments data is imported here
 import { RxCross2 } from "react-icons/rx";
 import "./index.css";
 
 export default function AssignmentEditor() {
-  const assignmentDescription = `
-  This assignment is available online.
-  
-  Submit a link to the landing page of your web application hosted on Netlify.
-  
-  The landing page should feature the following:
-  
-  • Your full name and section
-  • Links to each of the lab assignments
-  • Link to the Kanban application
-  • Links to all the relevant source code repositories
-  
-  The Kanban application should include a link to navigate back to the landing page.
-  `;
+  const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
+  const assignment = db.assignments.find((a) => a._id === aid); // Find the specific assignment based on aid
+
+  if (!assignment) {
+    return <div>Assignment not found</div>; // Fallback if assignment doesn't exist
+  }
 
   return (
     <div className="form-group" id="assignment-editor">
@@ -26,7 +20,7 @@ export default function AssignmentEditor() {
         <input
           type="text"
           id="assignment-name"
-          defaultValue="A1 - ENV + HTML"
+          defaultValue={assignment.title} // Use title from JSON data
           className="form-control mb-4"
         />
         <textarea
@@ -34,7 +28,7 @@ export default function AssignmentEditor() {
           rows={14}
           cols={50}
           className="form-control w-100"
-          defaultValue={assignmentDescription}
+          defaultValue={assignment.description} // Use description from JSON data
         />
       </div>
 
@@ -46,7 +40,11 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 m-0 p-0">
-            <input id="points" className="form-control" defaultValue={100} />
+            <input
+              id="points"
+              className="form-control"
+              defaultValue={assignment.points} // Use points from JSON data
+            />
           </div>
         </div>
 
@@ -63,9 +61,9 @@ export default function AssignmentEditor() {
               defaultValue="ASSIGNMENTS"
             >
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              <option value="OPTION 1">OPTION 1</option>
-              <option value="OPTION 2">OPTION 2</option>
-              <option value="OPTION 3">OPTION 3</option>
+              <option value="PROJECTS">PROJECTS</option>
+              <option value="QUIZZES">QUIZZES</option>
+              <option value="EXAMS">EXAMS</option>
             </select>
           </div>
         </div>
@@ -80,11 +78,11 @@ export default function AssignmentEditor() {
             <select
               id="grade-display"
               className="form-select py-2 w-100"
+              defaultValue="Percentage"
             >
               <option value="Percentage">Percentage</option>
-              <option value="OPTION 1">OPTION 1</option>
-              <option value="OPTION 2">OPTION 2</option>
-              <option value="OPTION 3">OPTION 3</option>
+              <option value="Decimal">Decimal</option>
+              <option value="Letter">Letter</option>
             </select>
           </div>
         </div>
@@ -96,66 +94,44 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 border rounded p-3">
-            <select id="submission-type" className="form-select p-2 w-100">
+            <select id="submission-type" className="form-select p-2 w-100" defaultValue="Online">
               <option value="Online">Online</option>
-              <option value="OPTION 1">OPTION 1</option>
-              <option value="OPTION 2">OPTION 2</option>
-              <option value="OPTION 3">OPTION 3</option>
+              <option value="In-Person">In-Person</option>
             </select>
 
             <div className="mt-4">
               <p className="form-label fs-5 fw-bold">Online Entry Options</p>
 
               <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="text-entry"
-                  className="form-check-input"
-                />
+                <input type="checkbox" id="text-entry" className="form-check-input" />
                 <label className="form-label" htmlFor="text-entry">
                   Text Entry
                 </label>
               </div>
 
               <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="website-url"
-                  className="form-check-input"
-                />
+                <input type="checkbox" id="website-url" className="form-check-input" />
                 <label className="form-label" htmlFor="website-url">
                   Website URL
                 </label>
               </div>
 
               <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="media-recordings"
-                  className="form-check-input"
-                />
+                <input type="checkbox" id="media-recordings" className="form-check-input" />
                 <label className="form-label" htmlFor="media-recordings">
                   Media Recordings
                 </label>
               </div>
 
               <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="student-annotation"
-                  className="form-check-input"
-                />
+                <input type="checkbox" id="student-annotation" className="form-check-input" />
                 <label className="form-label" htmlFor="student-annotation">
                   Student Annotation
                 </label>
               </div>
 
               <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="file-upload"
-                  className="form-check-input"
-                />
+                <input type="checkbox" id="file-upload" className="form-check-input" />
                 <label className="form-label" htmlFor="file-upload">
                   File Uploads
                 </label>
@@ -180,9 +156,9 @@ export default function AssignmentEditor() {
               Due
             </label>
             <input
-              type="datetime-local"
+              type="date"
               id="due-date"
-              defaultValue="2024-09-15T17:30"
+              defaultValue={assignment.due} // Use due date from JSON data
               className="form-control"
             />
 
@@ -192,9 +168,9 @@ export default function AssignmentEditor() {
                   Available from
                 </label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   id="available-from"
-                  defaultValue="2024-09-01T17:30"
+                  defaultValue={assignment.availableFrom} // Use availableFrom from JSON data
                   className="form-control"
                 />
               </div>
@@ -204,9 +180,9 @@ export default function AssignmentEditor() {
                   Until
                 </label>
                 <input
-                  type="datetime-local"
+                  type="date"
                   id="available-until"
-                  defaultValue="2024-09-19T17:30"
+                  defaultValue={assignment.due} // Use due date from JSON data
                   className="form-control"
                 />
               </div>
@@ -218,10 +194,9 @@ export default function AssignmentEditor() {
       <hr />
 
       <div className="d-flex justify-content-end gap-2">
-        <button className="btn btn-lg btn-secondary">Cancel</button>
-        <button className="btn btn-lg btn-danger">Save</button>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary">Cancel</Link>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger">Save</Link>
       </div>
     </div>
   );
-};
-
+}
