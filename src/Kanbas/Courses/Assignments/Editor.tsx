@@ -1,134 +1,202 @@
+import { useParams, Link } from "react-router-dom";
+import * as db from "../../Database"; // Assuming assignments data is imported here
+import { RxCross2 } from "react-icons/rx";
+import "./index.css";
+
 export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">
+  const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
+  const assignment = db.assignments.find((a) => a._id === aid); // Find the specific assignment based on aid
+
+  if (!assignment) {
+    return <div>Assignment not found</div>; // Fallback if assignment doesn't exist
+  }
+
+  return (
+    <div className="form-group" id="assignment-editor">
+      <div className="w-100">
+        <label className="form-label" htmlFor="assignment-name">
           <h3>Assignment Name</h3>
         </label>
-        <input id="wd-name" value="A1 - ENV + HTML" />
-        <br />
-        <br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of
-          your Web application running on Netlify. The landing page should include
-          the following: Your full name and section Links to each of the lab
-          assignments Link to the Kanbas application Links to all relevant source
-          code repositories The Kanbas application should include a link to
-          navigate back to the landing page.
-        </textarea>
-        <br />
-        <table id="wd-inputs">
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-              <select id="wd-group">
-                <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display">Display Grade as</label>
-            </td>
-            <td>
-              <select id="wd-display">
-                <option value="PERCENTAGE">Percentage</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-type">Submission Type</label>
-            </td>
-            <td>
-              <select id="wd-type">
-                <option value="ONLINE">Online</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <label htmlFor="wd-option">Online Entry Options</label>
-              <br />
-              <input type="checkbox" name="check-option" id="wd-chkbox-text" />
-              <label htmlFor="wd-chkbox-text">Text Entry</label>
-              <br />
-  
-              <input type="checkbox" name="check-option" id="wd-chkbox-website" />
-              <label htmlFor="wd-chkbox-website">Website URL</label>
-              <br />
-  
-              <input type="checkbox" name="check-option" id="wd-chkbox-media" />
-              <label htmlFor="wd-chkbox-media">Media Recordings</label>
-              <br />
-  
-              <input
-                type="checkbox"
-                name="check-option"
-                id="wd-chkbox-annotation"
-              />
-              <label htmlFor="wd-chkbox-annotation">Student Annotation</label>
-              <br />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign">Assign</label>
-            </td>
-            <td align="left" valign="top">
-              <label htmlFor="wd-assign">Assign to</label>
-              <br />
-              <input id="wd-assign" value={"Everyone"} />
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <label htmlFor="wd-due">Due</label>
-              <br />
-              <input type="date" id="wd-due" value="2024-05-13" />
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <label htmlFor="wd-from">Available from</label>
-              <br />
-              <input type="date" id="wd-from" value="2024-05-06" />
-            </td>
-            <td>
-              <label htmlFor="wd-until">Until</label>
-              <br />
-              <input type="date" id="wd-until" value="2024-05-20" />
-            </td>
-          </tr>
-        </table>
-        <hr />
-        <table id="wd-buttons" width="100%">
-          <tr>
-            <td></td>
-            <td style={{ textAlign: "right" }}>
-              <button id="wd-cancel" type="button">
-                Cancel
-              </button>
-              &nbsp;
-              <button id="wd-save" type="button">
-                Save
-              </button>
-            </td>
-          </tr>
-        </table>
+        <input
+          type="text"
+          id="assignment-name"
+          defaultValue={assignment.title} // Use title from JSON data
+          className="form-control mb-4"
+        />
+        <textarea
+          id="assignment-description"
+          rows={14}
+          cols={50}
+          className="form-control w-100"
+          defaultValue={assignment.description} // Use description from JSON data
+        />
       </div>
-    );
-  }
-  
+
+      <div className="mt-3 container-fluid">
+        <div className="row mb-3">
+          <div className="col-2 d-flex justify-content-end">
+            <label className="form-label" htmlFor="points">
+              Points
+            </label>
+          </div>
+          <div className="col-10 m-0 p-0">
+            <input
+              id="points"
+              className="form-control"
+              defaultValue={assignment.points} // Use points from JSON data
+            />
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <div className="col-2 d-flex justify-content-end">
+            <label className="form-label" htmlFor="group">
+              Assignment Group
+            </label>
+          </div>
+          <div className="col-10 m-0 p-0">
+            <select
+              id="group"
+              className="form-select py-2 w-100"
+              defaultValue="ASSIGNMENTS"
+            >
+              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+              <option value="PROJECTS">PROJECTS</option>
+              <option value="QUIZZES">QUIZZES</option>
+              <option value="EXAMS">EXAMS</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <div className="col-2 d-flex justify-content-end">
+            <label className="form-label" htmlFor="grade-display">
+              Display Grade as
+            </label>
+          </div>
+          <div className="col-10 m-0 p-0">
+            <select
+              id="grade-display"
+              className="form-select py-2 w-100"
+              defaultValue="Percentage"
+            >
+              <option value="Percentage">Percentage</option>
+              <option value="Decimal">Decimal</option>
+              <option value="Letter">Letter</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="row mb-3">
+          <div className="col-2 d-flex justify-content-end">
+            <label className="form-label" htmlFor="submission-type">
+              Submission Type
+            </label>
+          </div>
+          <div className="col-10 border rounded p-3">
+            <select id="submission-type" className="form-select p-2 w-100" defaultValue="Online">
+              <option value="Online">Online</option>
+              <option value="In-Person">In-Person</option>
+            </select>
+
+            <div className="mt-4">
+              <p className="form-label fs-5 fw-bold">Online Entry Options</p>
+
+              <div className="form-check">
+                <input type="checkbox" id="text-entry" className="form-check-input" />
+                <label className="form-label" htmlFor="text-entry">
+                  Text Entry
+                </label>
+              </div>
+
+              <div className="form-check">
+                <input type="checkbox" id="website-url" className="form-check-input" />
+                <label className="form-label" htmlFor="website-url">
+                  Website URL
+                </label>
+              </div>
+
+              <div className="form-check">
+                <input type="checkbox" id="media-recordings" className="form-check-input" />
+                <label className="form-label" htmlFor="media-recordings">
+                  Media Recordings
+                </label>
+              </div>
+
+              <div className="form-check">
+                <input type="checkbox" id="student-annotation" className="form-check-input" />
+                <label className="form-label" htmlFor="student-annotation">
+                  Student Annotation
+                </label>
+              </div>
+
+              <div className="form-check">
+                <input type="checkbox" id="file-upload" className="form-check-input" />
+                <label className="form-label" htmlFor="file-upload">
+                  File Uploads
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-2 d-flex justify-content-end">
+            <label className="form-label" htmlFor="assign-to">
+              Assign to
+            </label>
+          </div>
+          <div className="col-10 border rounded p-3">
+            <div className="d-flex justify-content-between align-items-center bg-custom-gray" style={{ width: "120px" }}>
+              <p className="m-0 px-2">Everyone</p>
+              <RxCross2 className="me-2 fs-6 text-dark" />
+            </div>
+
+            <label className="form-label mt-3 fw-bold" htmlFor="due-date">
+              Due
+            </label>
+            <input
+              type="date"
+              id="due-date"
+              defaultValue={assignment.due} // Use due date from JSON data
+              className="form-control"
+            />
+
+            <div className="d-flex gap-3 mt-3 w-100">
+              <div className="d-flex flex-column w-100">
+                <label className="form-label fw-bold" htmlFor="available-from">
+                  Available from
+                </label>
+                <input
+                  type="date"
+                  id="available-from"
+                  defaultValue={assignment.availableFrom} // Use availableFrom from JSON data
+                  className="form-control"
+                />
+              </div>
+
+              <div className="d-flex flex-column w-100">
+                <label className="form-label fw-bold" htmlFor="available-until">
+                  Until
+                </label>
+                <input
+                  type="date"
+                  id="available-until"
+                  defaultValue={assignment.due} // Use due date from JSON data
+                  className="form-control"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="d-flex justify-content-end gap-2">
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary">Cancel</Link>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger">Save</Link>
+      </div>
+    </div>
+  );
+}
