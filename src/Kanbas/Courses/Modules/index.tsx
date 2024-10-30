@@ -4,8 +4,9 @@ import "../../styles.css";
 import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
-import * as db from "../../Database";
 import { useParams } from "react-router";
+import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
 
 // Define types for Module and Lesson
 interface Lesson {
@@ -25,45 +26,28 @@ interface Module {
 
 export default function Modules() {
   const { cid } = useParams(); // Get the course ID from the URL parameters
-  const [modules, setModules] = useState<Module[]>(
-    db.modules.filter((module) => module.course === cid) as Module[]
-  );
   const [moduleName, setModuleName] = useState<string>("");
 
-  const addModule = () => {
+  const modules = useSelector((state: any) => state.modulesReducer.modules); // Get modules from Redux store
+  const dispatch = useDispatch();
+
+  const handleAddModule = () => {
     if (moduleName.trim()) {
-      setModules([
-        ...modules,
-        {
-          _id: new Date().getTime().toString(),
-          name: moduleName,
-          description: "",
-          course: cid || "",
-          lessons: [],
-        },
-      ]);
+      dispatch(addModule({ name: moduleName, course: cid }));
       setModuleName(""); // Clear the input after adding
     }
   };
 
-  const deleteModule = (moduleId: string) => {
-    setModules(modules.filter((m) => m._id !== moduleId));
+  const handleDeleteModule = (moduleId: string) => {
+    dispatch(deleteModule(moduleId));
   };
 
-  const editModule = (moduleId: string) => {
-    setModules(
-      modules.map((m) =>
-        m._id === moduleId ? { ...m, editing: true } : m
-      )
-    );
+  const handleEditModule = (moduleId: string) => {
+    dispatch(editModule(moduleId));
   };
 
-  const updateModule = (module: Module) => {
-    setModules(
-      modules.map((m) =>
-        m._id === module._id ? { ...module, editing: false } : m
-      )
-    );
+  const handleUpdateModule = (module: Module) => {
+    dispatch(updateModule(module));
   };
 
   return (
@@ -71,7 +55,7 @@ export default function Modules() {
       <ModulesControls
         moduleName={moduleName}
         setModuleName={setModuleName}
-        addModule={addModule}
+        addModule={handleAddModule}
       />
       <br />
       <br />
@@ -80,7 +64,7 @@ export default function Modules() {
 
       <ul id="wd-modules" className="list-group rounded-0">
         {modules
-          .filter((module) => module.course === cid)
+          .filter((module: Module) => module.course === cid)
           .map((module: Module, index: number) => (
             <li key={index} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary">
@@ -93,23 +77,23 @@ export default function Modules() {
                     className="form-control w-50 d-inline-block"
                     defaultValue={module.name}
                     onChange={(e) =>
-                      updateModule({ ...module, name: e.target.value })
+                      handleUpdateModule({ ...module, name: e.target.value })
                     }
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        updateModule({ ...module, editing: false });
+                        handleUpdateModule({ ...module, editing: false });
                       }
                     }}
                   />
                 )}
-                
+
                 <ModuleControlButtons
                   moduleId={module._id}
-                  deleteModule={deleteModule}
-                  editModule={editModule}
+                  deleteModule={handleDeleteModule}
+                  editModule={handleEditModule}
                 />
               </div>
-              
+
               {module.lessons && (
                 <ul className="wd-lessons list-group rounded-0">
                   {module.lessons.map((lesson: Lesson, idx: number) => (
