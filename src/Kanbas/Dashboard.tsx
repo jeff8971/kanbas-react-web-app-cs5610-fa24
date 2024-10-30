@@ -1,55 +1,21 @@
 import { Link } from "react-router-dom";
-import * as db from "./Database";
-import React, { useState } from "react";
+import React from "react";
 
-export default function Dashboard() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
-  const [course, setCourse] = useState<any>({
-    _id: "0",
-    name: "New Course",
-    number: "New Number",
-    startDate: "2023-09-10",
-    endDate: "2023-12-15",
-    imageurl: "/images/reactjs.jpg",
-    description: "New Description"
-  });
-
-  const addNewCourse = () => {
-    const newCourse = {
-      ...course,
-      _id: new Date().getTime().toString()
-    };
-    setCourses([...courses, newCourse]);
-    resetForm();
-  };
-
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
-  };
-
-  const editCourse = (selectedCourse: any) => {
-    setCourse(selectedCourse);
-  };
-
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => (c._id === course._id ? course : c))
-    );
-    resetForm();
-  };
-
-  const resetForm = () => {
-    setCourse({
-      _id: "0",
-      name: "New Course",
-      number: "New Number",
-      startDate: "2023-09-10",
-      endDate: "2023-12-15",
-      imageurl: "/images/reactjs.jpg",
-      description: "New Description"
-    });
-  };
-
+export default function Dashboard({
+  courses,
+  course,
+  setCourse,
+  addNewCourse,
+  deleteCourse,
+  updateCourse,
+}: {
+  courses: any[];
+  course: any;
+  setCourse: (course: any) => void;
+  addNewCourse: () => void;
+  deleteCourse: (courseId: string) => void;
+  updateCourse: () => void;
+}) {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title" className="float-start">Dashboard</h1>
@@ -122,7 +88,7 @@ export default function Dashboard() {
                       id="wd-edit-course-click"
                       onClick={(event) => {
                         event.preventDefault();
-                        editCourse(course);
+                        setCourse(course);
                       }}
                       className="btn btn-warning me-2"
                     >
