@@ -19,10 +19,16 @@ export default function Dashboard({
     updateCourse: () => void;
 }) {
     const dispatch = useDispatch();
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
+    const { currentUser } = useSelector((state: any) => state.accountReducer) || {}; // Add safe check
+    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer) || { enrollments: [] }; // Add safe check
 
     const [showAllCourses, setShowAllCourses] = useState(false);
+
+    // Prevent further actions if currentUser is undefined
+    if (!currentUser) {
+        return <div>Please sign in to view your courses.</div>;
+    }
+
     const courseIdsEnrolled = enrollments
         .filter((enrollment: any) => enrollment.user === currentUser._id)
         .map((enrollment: any) => enrollment.course);
@@ -99,7 +105,7 @@ export default function Dashboard({
                                 <div className="card rounded-3 overflow-hidden shadow" style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
                                     <Link className="wd-dashboard-course-link" to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : `/Kanbas/Dashboard`} style={{ flex: '1', textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                                         <img
-                                            style={{ height: '160px', objectFit: 'cover', textDecoration: "none", color: "navy", fontWeight: "bold" }}
+                                            style={{ height: '160px', objectFit: 'cover' }}
                                             width="100%"
                                             alt={course.name}
                                             src={course.imageurl}
