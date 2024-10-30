@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import { useSelector } from "react-redux";
+import * as db from "./Database";
 
 export default function Dashboard({
   courses,
@@ -16,11 +18,27 @@ export default function Dashboard({
   deleteCourse: (courseId: string) => void;
   updateCourse: () => void;
 }) {
+  const { currentUser } = useSelector((state: any) => state.accountReducer) || {}; // Handle case where currentUser may be undefined
+  const { enrollments = [] } = db; // Set default empty array for enrollments
+
+  // If there is no currentUser (user is not signed in), show a message
+  if (!currentUser) {
+    return <div>Please sign in to view your courses.</div>;
+  }
+
+  // Filter courses based on enrollments and currentUser's ID
+  const enrolledCourses = courses.filter((course) =>
+    enrollments.some(
+      (enrollment) =>
+        enrollment.user === currentUser.id && enrollment.course === course._id
+    )
+  );
+
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title" className="float-start">Dashboard</h1>
       <br /><br /><hr />
-      
+
       <h5>
         New Course
         <button
@@ -39,7 +57,7 @@ export default function Dashboard({
         </button>
       </h5>
       <br />
-      
+
       <input
         value={course.name}
         className="form-control mb-2"
@@ -55,13 +73,13 @@ export default function Dashboard({
       <hr />
 
       <h2 id="wd-dashboard-published" className="float-start">
-        Published Courses ({courses.length})
+        Published Courses ({enrolledCourses.length})
       </h2>
       <br /><br /><hr />
 
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
-          {courses.map((course) => (
+          {enrolledCourses.map((course) => (
             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
               <div className="card rounded-3 overflow-hidden">
                 <Link
