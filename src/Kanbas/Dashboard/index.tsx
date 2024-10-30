@@ -19,12 +19,11 @@ export default function Dashboard({
     updateCourse: () => void;
 }) {
     const dispatch = useDispatch();
-    const { currentUser } = useSelector((state: any) => state.accountReducer) || {}; // Add safe check
-    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer) || { enrollments: [] }; // Add safe check
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
 
     const [showAllCourses, setShowAllCourses] = useState(false);
 
-    // Prevent further actions if currentUser is undefined
     if (!currentUser) {
         return <div>Please sign in to view your courses.</div>;
     }
@@ -63,7 +62,11 @@ export default function Dashboard({
                     <div className="d-flex justify-content-between">
                         <h3 className="m-0">New Course</h3>
                         <div>
-                            <button className="btn btn-warning me-2" onClick={updateCourse} id="wd-update-course-click">
+                            <button
+                                className="btn btn-warning me-2"
+                                onClick={updateCourse}
+                                id="wd-update-course-click"
+                            >
                                 Update
                             </button>
                             <button
@@ -103,7 +106,11 @@ export default function Dashboard({
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card rounded-3 overflow-hidden shadow" style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
-                                    <Link className="wd-dashboard-course-link" to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : `/Kanbas/Dashboard`} style={{ flex: '1', textDecoration: "none", color: "navy", fontWeight: "bold" }}>
+                                    <Link
+                                        className="wd-dashboard-course-link"
+                                        to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : `/Kanbas/Dashboard`}
+                                        style={{ flex: '1', textDecoration: "none", color: "navy", fontWeight: "bold" }}
+                                    >
                                         <img
                                             style={{ height: '160px', objectFit: 'cover' }}
                                             width="100%"
@@ -114,7 +121,10 @@ export default function Dashboard({
                                             <h5 className="wd-dashboard-course-title card-title" style={{ color: 'darkblue' }}>
                                                 {truncateText(course.name, 22)}
                                             </h5>
-                                            <p className="wd-dashboard-course-title card-text overflow-y-hidden" style={{ flexGrow: 1, color: 'gray', fontSize: '0.85rem', marginTop: '-0.5rem', maxHeight: 100 }}>
+                                            <p
+                                                className="wd-dashboard-course-title card-text overflow-y-hidden"
+                                                style={{ flexGrow: 1, color: 'gray', fontSize: '0.85rem', marginTop: '-0.5rem', maxHeight: 100 }}
+                                            >
                                                 {course.description}
                                             </p>
                                             <br />
