@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { BsGripVertical } from "react-icons/bs";
-import { FaTrash } from "react-icons/fa";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
+import { MdCheckCircle } from "react-icons/md";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Controls from "./Controls";
 import TitleButtons from "./TitleButtons";
-import LessonControlButtons from "../Modules/LessonControlButtons";
 import LeftControls from "./LeftControls";
 import { deleteAssignment } from "./reducer";
 import "./index.css";
@@ -33,8 +34,7 @@ export default function Assignments() {
 
   // Handle delete action with confirmation
   const handleDelete = (assignmentId: string) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this assignment?");
-    if (confirmDelete) {
+    if (window.confirm("Are you sure you want to delete this assignment?")) {
       dispatch(deleteAssignment(assignmentId));
       setFilteredAssignments(filteredAssignments.filter((a) => a._id !== assignmentId));
     }
@@ -85,14 +85,14 @@ export default function Assignments() {
                     </p>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <LessonControlButtons />
-                  <button
-                    className="btn btn-outline-danger btn-sm ms-2"
+                <div className="d-flex align-items-center gap-3">
+                  <MdCheckCircle className="fs-4 text-success" />
+                  <BsThreeDotsVertical className="fs-4 text-muted" />
+                  <MdDelete
+                    className="fs-4 text-danger"
                     onClick={() => handleDelete(assignment._id)}
-                  >
-                    <FaTrash />
-                  </button>
+                    style={{ cursor: "pointer" }}
+                  />
                 </div>
               </li>
             ))}
