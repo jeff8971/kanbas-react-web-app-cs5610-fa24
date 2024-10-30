@@ -1,29 +1,49 @@
+import { useState } from "react";
 import { BsGripVertical } from "react-icons/bs";
+import { FaTrash } from "react-icons/fa";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Controls from "./Controls";
 import TitleButtons from "./TitleButtons";
-import "./index.css";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import LeftControls from "./LeftControls";
-import { useParams, Link } from "react-router-dom";
-import * as db from "../../Database"; // Import the database
+import { deleteAssignment } from "./reducer";
+import "./index.css";
+
+interface Assignment {
+  _id: string;
+  title: string;
+  course: string;
+  description: string;
+  points: number;
+  due: string;
+  availableFrom: string;
+  multipleModules?: boolean;
+}
 
 export default function Assignments() {
-  const { cid } = useParams(); // Get the course ID from the URL parameters
-  const assignments = db.assignments; // Access assignments from the database
+  const { cid } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const [filteredAssignments, setFilteredAssignments] = useState<Assignment[]>(
+    assignments.filter((assignment: Assignment) => assignment.course === cid)
+  );
 
-  // Filter assignments based on the current course ID
-  const filteredAssignments = assignments.filter((assignment) => assignment.course === cid);
+  // Handle delete action with confirmation
+  const handleDelete = (assignmentId: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this assignment?");
+    if (confirmDelete) {
+      dispatch(deleteAssignment(assignmentId));
+      setFilteredAssignments(filteredAssignments.filter((a) => a._id !== assignmentId));
+    }
+  };
 
   return (
     <div id="wd-assignments" className="container mt-4">
-      {/* Top Controls for Adding Group and Assignment */}
-      <div className="d-flex justify-content-end mb-3">
-        <button className="btn btn-secondary me-2">+ Group</button>
-        <button className="btn btn-danger">+ Assignment</button>
-      </div>
-
+      <Controls />
       <ul id="wd-container" className="list-group rounded-0">
-        {/* Assignment Group Title */}
         <li className="wd-assignment list-group-item p-0 mb-4 border-gray">
           <div
             id="wd-assignments-title"
@@ -33,15 +53,10 @@ export default function Assignments() {
               <BsGripVertical className="me-2 fs-4" />
               <p className="m-0 fw-bold">ASSIGNMENTS</p>
             </div>
-            <div className="d-flex align-items-center">
-              <span className="badge bg-light text-dark fs-6 px-2">40% of Total</span>
-              <TitleButtons />
-            </div>
+            <TitleButtons />
           </div>
-
-          {/* List of Assignments */}
           <ul className="wd-assignment-list list-group rounded-0">
-            {filteredAssignments.map((assignment) => (
+            {filteredAssignments.map((assignment: Assignment) => (
               <li
                 key={assignment._id}
                 className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center"
@@ -61,12 +76,24 @@ export default function Assignments() {
                           <span className="text-danger">Multiple Modules</span> |{" "}
                         </>
                       )}
-                      <strong>Not available until</strong> {new Date(assignment.availableFrom).toLocaleDateString()} | <br />
-                      <strong>Due</strong> {new Date(assignment.due).toLocaleDateString()} | {assignment.points} pts
+                      <strong>Not available until</strong>{" "}
+                      {new Date(assignment.availableFrom).toLocaleDateString()} |{" "}
+                      <br />
+                      <strong>Due</strong>{" "}
+                      {new Date(assignment.due).toLocaleDateString()} |{" "}
+                      {assignment.points} pts
                     </p>
                   </div>
                 </div>
-                <LessonControlButtons />
+                <div className="d-flex align-items-center">
+                  <LessonControlButtons />
+                  <button
+                    className="btn btn-outline-danger btn-sm ms-2"
+                    onClick={() => handleDelete(assignment._id)}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

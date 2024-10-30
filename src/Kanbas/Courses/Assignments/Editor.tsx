@@ -1,11 +1,49 @@
-import { useParams, Link } from "react-router-dom";
-import * as db from "../../Database"; // Assuming assignments data is imported here
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import "./index.css";
+import { addAssignment, updateAssignment } from "./reducer"; // Assuming you've created this in reducer.ts
+
+interface Assignment {
+  _id: string;
+  title: string;
+  course: string | undefined;
+  description: string;
+  points: number;
+  due: string;
+  availableFrom: string;
+}
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
-  const assignment = db.assignments.find((a) => a._id === aid); // Find the specific assignment based on aid
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
+  const existingAssignment = assignments.find(
+    (assignment: Assignment) => assignment._id === aid && assignment.course === cid
+  );
+
+  const defaultAssignment: Assignment = {
+    _id: "A" + Math.floor(100 + Math.random() * 900),
+    title: "New Assignment",
+    course: cid,
+    description: "New Assignment Description",
+    points: 100,
+    due: "2024-12-31",
+    availableFrom: "2024-01-01",
+  };
+
+  const [assignment, setAssignment] = useState<Assignment>(existingAssignment || defaultAssignment);
+
+  const handleSave = () => {
+    if (existingAssignment) {
+      dispatch(updateAssignment(assignment));
+    } else {
+      dispatch(addAssignment(assignment));
+    }
+    navigate(`/Kanbas/Courses/${cid}/Assignments`);
+  };
 
   if (!assignment) {
     return <div>Assignment not found</div>; // Fallback if assignment doesn't exist
@@ -20,15 +58,21 @@ export default function AssignmentEditor() {
         <input
           type="text"
           id="assignment-name"
-          defaultValue={assignment.title} // Use title from JSON data
+          value={assignment.title}
           className="form-control mb-4"
+          onChange={(e) =>
+            setAssignment((prev: Assignment) => ({ ...prev, title: e.target.value }))
+          }
         />
         <textarea
           id="assignment-description"
           rows={14}
           cols={50}
           className="form-control w-100"
-          defaultValue={assignment.description} // Use description from JSON data
+          value={assignment.description}
+          onChange={(e) =>
+            setAssignment((prev: Assignment) => ({ ...prev, description: e.target.value }))
+          }
         />
       </div>
 
@@ -42,8 +86,12 @@ export default function AssignmentEditor() {
           <div className="col-10 m-0 p-0">
             <input
               id="points"
+              type="number"
               className="form-control"
-              defaultValue={assignment.points} // Use points from JSON data
+              value={assignment.points}
+              onChange={(e) =>
+                setAssignment((prev: Assignment) => ({ ...prev, points: Number(e.target.value) }))
+              }
             />
           </div>
         </div>
@@ -55,11 +103,7 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 m-0 p-0">
-            <select
-              id="group"
-              className="form-select py-2 w-100"
-              defaultValue="ASSIGNMENTS"
-            >
+            <select id="group" className="form-select py-2 w-100" defaultValue="ASSIGNMENTS">
               <option value="ASSIGNMENTS">ASSIGNMENTS</option>
               <option value="PROJECTS">PROJECTS</option>
               <option value="QUIZZES">QUIZZES</option>
@@ -75,11 +119,7 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 m-0 p-0">
-            <select
-              id="grade-display"
-              className="form-select py-2 w-100"
-              defaultValue="Percentage"
-            >
+            <select id="grade-display" className="form-select py-2 w-100" defaultValue="Percentage">
               <option value="Percentage">Percentage</option>
               <option value="Decimal">Decimal</option>
               <option value="Letter">Letter</option>
@@ -94,42 +134,41 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 border rounded p-3">
-            <select id="submission-type" className="form-select p-2 w-100" defaultValue="Online">
+            <select
+              id="submission-type"
+              className="form-select p-2 w-100"
+              defaultValue="Online"
+            >
               <option value="Online">Online</option>
               <option value="In-Person">In-Person</option>
             </select>
 
             <div className="mt-4">
               <p className="form-label fs-5 fw-bold">Online Entry Options</p>
-
               <div className="form-check">
                 <input type="checkbox" id="text-entry" className="form-check-input" />
                 <label className="form-label" htmlFor="text-entry">
                   Text Entry
                 </label>
               </div>
-
               <div className="form-check">
                 <input type="checkbox" id="website-url" className="form-check-input" />
                 <label className="form-label" htmlFor="website-url">
                   Website URL
                 </label>
               </div>
-
               <div className="form-check">
                 <input type="checkbox" id="media-recordings" className="form-check-input" />
                 <label className="form-label" htmlFor="media-recordings">
                   Media Recordings
                 </label>
               </div>
-
               <div className="form-check">
                 <input type="checkbox" id="student-annotation" className="form-check-input" />
                 <label className="form-label" htmlFor="student-annotation">
                   Student Annotation
                 </label>
               </div>
-
               <div className="form-check">
                 <input type="checkbox" id="file-upload" className="form-check-input" />
                 <label className="form-label" htmlFor="file-upload">
@@ -158,8 +197,11 @@ export default function AssignmentEditor() {
             <input
               type="date"
               id="due-date"
-              defaultValue={assignment.due} // Use due date from JSON data
+              value={assignment.due}
               className="form-control"
+              onChange={(e) =>
+                setAssignment((prev: Assignment) => ({ ...prev, due: e.target.value }))
+              }
             />
 
             <div className="d-flex gap-3 mt-3 w-100">
@@ -170,8 +212,11 @@ export default function AssignmentEditor() {
                 <input
                   type="date"
                   id="available-from"
-                  defaultValue={assignment.availableFrom} // Use availableFrom from JSON data
+                  value={assignment.availableFrom}
                   className="form-control"
+                  onChange={(e) =>
+                    setAssignment((prev: Assignment) => ({ ...prev, availableFrom: e.target.value }))
+                  }
                 />
               </div>
 
@@ -182,8 +227,11 @@ export default function AssignmentEditor() {
                 <input
                   type="date"
                   id="available-until"
-                  defaultValue={assignment.due} // Use due date from JSON data
+                  value={assignment.due}
                   className="form-control"
+                  onChange={(e) =>
+                    setAssignment((prev: Assignment) => ({ ...prev, due: e.target.value }))
+                  }
                 />
               </div>
             </div>
@@ -194,8 +242,12 @@ export default function AssignmentEditor() {
       <hr />
 
       <div className="d-flex justify-content-end gap-2">
-        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary">Cancel</Link>
-        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger">Save</Link>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary">
+          Cancel
+        </Link>
+        <button onClick={handleSave} className="btn btn-danger">
+          Save
+        </button>
       </div>
     </div>
   );
