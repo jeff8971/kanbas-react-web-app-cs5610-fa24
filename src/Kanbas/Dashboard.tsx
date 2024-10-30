@@ -10,7 +10,7 @@ export default function Dashboard() {
     number: "New Number",
     startDate: "2023-09-10",
     endDate: "2023-12-15",
-    image: "/images/reactjs.jpg",
+    imageurl: "/images/reactjs.jpg", // use url for my code
     description: "New Description"
   });
   
