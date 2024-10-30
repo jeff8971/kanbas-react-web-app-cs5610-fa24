@@ -16,21 +16,27 @@ export default function Assignments() {
 
   return (
     <div id="wd-assignments" className="container mt-4">
-      {/* Assignment Control Buttons */}
-      <Controls />
+      {/* Top Controls for Adding Group and Assignment */}
+      <div className="d-flex justify-content-end mb-3">
+        <button className="btn btn-secondary me-2">+ Group</button>
+        <button className="btn btn-danger">+ Assignment</button>
+      </div>
 
       <ul id="wd-container" className="list-group rounded-0">
         {/* Assignment Group Title */}
-        <li className="wd-assignment list-group-item p-0 mb-5 fs-5 border-gray">
+        <li className="wd-assignment list-group-item p-0 mb-4 border-gray">
           <div
             id="wd-assignments-title"
-            className="d-flex justify-content-between align-items-center bg-secondary p-2 py-3"
+            className="d-flex justify-content-between align-items-center bg-secondary p-2"
           >
             <div className="d-flex align-items-center">
               <BsGripVertical className="me-2 fs-4" />
               <p className="m-0 fw-bold">ASSIGNMENTS</p>
             </div>
-            <TitleButtons />
+            <div className="d-flex align-items-center">
+              <span className="badge bg-light text-dark fs-6 px-2">40% of Total</span>
+              <TitleButtons />
+            </div>
           </div>
 
           {/* List of Assignments */}
@@ -40,25 +46,23 @@ export default function Assignments() {
                 key={assignment._id}
                 className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center"
               >
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-start">
                   <LeftControls />
-                  <div className="my-2 mx-4">
+                  <div className="my-2 mx-3">
                     <Link
                       to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-                      className="wd-assignment-link text-decoration-none"
+                      className="wd-assignment-link text-decoration-none fw-bold"
                     >
                       {assignment.title}
                     </Link>
-                    <p className="m-0 fs-6">
+                    <p className="m-0 fs-6 text-muted">
                       {assignment.multipleModules && (
                         <>
-                          <span className="text-danger">Multiple Modules</span> |{' '}
+                          <span className="text-danger">Multiple Modules</span> |{" "}
                         </>
                       )}
-                      <strong> Not available until </strong>
-                      {new Date(assignment.availableFrom).toLocaleDateString()} | <br />
-                      <strong> Due </strong>
-                      {new Date(assignment.due).toLocaleDateString()} | {assignment.points} pts
+                      <strong>Not available until</strong> {new Date(assignment.availableFrom).toLocaleDateString()} | <br />
+                      <strong>Due</strong> {new Date(assignment.due).toLocaleDateString()} | {assignment.points} pts
                     </p>
                   </div>
                 </div>

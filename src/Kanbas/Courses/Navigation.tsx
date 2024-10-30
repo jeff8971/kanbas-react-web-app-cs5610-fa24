@@ -8,17 +8,9 @@ export default function CoursesNavigation() {
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
 
-  // Extract the current section from the URL
-  const currentSection = pathname.split("/")[4];
-
   return (
     <div>
-      {/* Breadcrumb */}
-      <h2 className="text-danger">
-        {course && course.name} &gt; {currentSection}
-      </h2>
-
-      {/* Navigation Links */}
+      {/* Navigation Links without Breadcrumb */}
       <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
         {links.map((link, index) => (
           <Link
