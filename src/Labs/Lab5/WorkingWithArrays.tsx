@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+
 
 export default function WorkingWithArrays() {
+    const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
     const API = `${REMOTE_SERVER}/lab5/todos`;
 
     const [todo, setTodo] = useState({
@@ -42,6 +43,104 @@ export default function WorkingWithArrays() {
                 onChange={(e) => setTodo({ ...todo, id: e.target.value })}
             />
             <hr />
+
+            <h3>Filtering Array Items</h3>
+                <a id="wd-retrieve-completed-todos" className="btn btn-primary"
+                href={`${API}?completed=true`}
+            >
+                Get Completed Todos
+            </a>
+            <hr/>
+
+            <h3>Creating new Items in an Array</h3>
+                <a id="wd-retrieve-completed-todos" className="btn btn-primary"
+                href={`${API}/create`}
+            >
+                Create Todo
+            </a>
+            <hr/>
+
+            <h3>Deleting from an Array</h3>
+                <a
+                    id="wd-retrieve-completed-todos"
+                    className="btn btn-primary float-end"
+                    href={`${API}/${todo.id}/delete`}
+                >
+                    Delete Todo with ID = {todo.id}
+                </a>
+                <input
+                    value={todo.id}
+                    className="form-control w-50"
+                    onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+                />
+            <hr />
+
+            <h3>Updating an Item in an Array</h3>
+                <a
+                    href={`${API}/${todo.id}/title/${todo.title}`}
+                    className="btn btn-primary float-end"
+                >
+                    Update Todo
+                </a>
+                <input
+                    value={todo.id}
+                    className="form-control w-25 float-start me-2"
+                    onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+                />
+                <input
+                    value={todo.title}
+                    className="form-control w-50 float-start"
+                    onChange={(e) => setTodo({ ...todo, title: e.target.value })}
+                />
+                <br />
+                <br />
+            <hr />
+
+            <h3>Updating Completed</h3>
+                <a 
+                    href={`${API}/${todo.id}/completed/${todo.completed}`} 
+                    className="btn btn-primary float-end"
+                >
+                    Update Completed
+                </a>
+                <input 
+                    value={todo.id} 
+                    className="form-control w-25 float-start me-2" 
+                    onChange={(event) => setTodo({ ...todo, id: event.target.value })} 
+                />
+                <input 
+                    value={Number(todo.completed)} 
+                    type="checkbox" 
+                    className="float-start me-2" 
+                    onChange={(event) => setTodo({ ...todo, completed: Boolean(event.target.checked) })} 
+                />
+                <br />
+                <br />
+            <hr />
+
+            <h3>Updating Description</h3>
+                <a 
+                    href={`${API}/${todo.id}/description/${todo.description}`} 
+                    className="btn btn-primary float-end"
+                >
+                    Update Description
+                </a>
+                <input 
+                    value={todo.id} 
+                    className="form-control w-25 float-start me-2" 
+                    onChange={(event) => setTodo({ ...todo, id: event.target.value })} 
+                />
+                <input 
+                    value={todo.description} 
+                    className="form-control w-25 float-start me-2" 
+                    onChange={(event) => setTodo({ ...todo, description: event.target.value })} 
+                />
+                <br />
+                <br />
+            <hr />
+
+
+
         </div>
     );
 }
