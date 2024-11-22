@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import * as client from "./client";
 import { BsGripVertical } from "react-icons/bs";
 import "../../styles.css";
 import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
 import { useParams } from "react-router";
-import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 
 // Define types for Module and Lesson
@@ -31,6 +32,19 @@ export default function Modules() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
+  const createModule = async (module: any) => {
+    const newModule = await client.createModule(cid as string, module);
+    dispatch(addModule(newModule));
+  };
+
+  const fetchModules = async () => {
+    const modules = await client.findModulesForCourse(cid as string);
+    dispatch(setModules(modules));
+    };
+    useEffect(() => {
+    fetchModules();
+  }, []);
+
   const handleAddModule = () => {
     if (moduleName.trim()) {
       dispatch(addModule({ name: moduleName, course: cid }));
@@ -50,6 +64,16 @@ export default function Modules() {
     dispatch(updateModule(module));
   };
 
+  const removeModule = async (moduleId: string) => {
+    await client.deleteModule(moduleId);
+    dispatch(deleteModule(moduleId));
+  };
+
+  const saveModule = async (module: any) => {
+    const status = await client.updateModule(module);
+    dispatch(updateModule(module));
+  };
+
   return (
     <div style={{ textAlign: "left" }}>
       {/* Render ModulesControls only for FACULTY */}
@@ -57,8 +81,10 @@ export default function Modules() {
         <ModulesControls
           moduleName={moduleName}
           setModuleName={setModuleName}
-          addModule={handleAddModule}
-        />
+          addModule={() => {
+            createModule({ name: moduleName, course: cid });
+            setModuleName("");
+          }} />
       )}
 
       <br />
@@ -70,13 +96,27 @@ export default function Modules() {
             <li key={index} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center">
                 <BsGripVertical className="me-2 fs-3" />
-                {module.name}
+                {!module.editing && module.name}
+                                {module.editing && (
+                                    <input className="form-control w-50 d-inline-block"
+                                        onChange={(e) =>
+                                            dispatch(
+                                                updateModule({ ...module, name: e.target.value })
+                                            )
+                                        }
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                saveModule({ ...module, editing: false });
+                                            }
+                                        }}
+                                        value={module.name} />
+                                )}
                 
                 {/* Show ModuleControlButtons only for FACULTY */}
                 {currentUser.role === "FACULTY" && (
                   <ModuleControlButtons
                     moduleId={module._id}
-                    deleteModule={handleDeleteModule}
+                    deleteModule={(moduleId) => { removeModule(moduleId); }}
                     editModule={handleEditModule}
                   />
                 )}
