@@ -1,3 +1,4 @@
+import * as client from "./client";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +8,10 @@ export default function Profile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const updateProfile = async () => {
+    const updatedProfile = await client.updateUser(profile);
+    dispatch(setCurrentUser(updatedProfile));
+  };
 
   const [profile, setProfile] = useState<any>({});
 
@@ -19,10 +24,12 @@ export default function Profile() {
     }
   }, [currentUser, navigate]);
 
-  const signout = () => {
-    dispatch(setCurrentUser(null)); // Set currentUser to null in Redux store
+  const signout = async () => {
+    await client.signout();
+    dispatch(setCurrentUser(null));
     navigate("/Kanbas/Account/Signin");
   };
+
 
   return (
     <div id="wd-profile-screen" style={{ width: "400px" }}>
@@ -79,9 +86,8 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
-          <button onClick={signout} className="btn btn-danger w-100 mb-2" id="wd-signout-btn">
-            Sign out
-          </button>
+          <button onClick={updateProfile} className="btn btn-primary w-100 mb-2"> Update </button>
+          <button onClick={signout} className="btn btn-danger w-100 mb-2" id="wd-signout-btn">Sign out</button>
         </>
       )}
     </div>

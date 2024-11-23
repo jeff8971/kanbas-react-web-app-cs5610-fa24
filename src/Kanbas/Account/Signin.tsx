@@ -1,3 +1,4 @@
+import * as client from "./client";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,17 +10,13 @@ export default function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const signin = () => {
-    const user = db.users.find(
-      (u: any) => 
-        u.username === credentials.username && 
-        u.password === credentials.password
-    );
-    if (!user) return; // Exit if credentials are incorrect
-
-    dispatch(setCurrentUser(user)); // Set the current user in Redux
-    navigate("/Kanbas/Dashboard"); // Redirect to the Dashboard
+  const signin = async () => {
+    const user =  await client.signin(credentials);
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    navigate("/Kanbas/Dashboard");
   };
+
 
   return (
     <div id="wd-signin-screen" style={{ width: "400px" }}>

@@ -4,14 +4,17 @@ import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
 import Courses from "./Courses";
 import * as client from "./Courses/client";
+import * as userClient from "./Account/client";
 import {useEffect, useState } from "react";
 import "./styles.css";
 import store from "./store";
 import { Provider } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute"; // Import ProtectedRoute
+import Session from "./Account/Session";
 
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
+  
   const fetchCourses = async () => {
     const courses = await client.fetchAllCourses();
     setCourses(courses);
@@ -69,6 +72,7 @@ export default function Kanbas() {
 
   return (
     <Provider store={store}>
+                  <Session>
       <div id="wd-kanbas">
         <KanbasNavigation />
         <div className="wd-main-content-offset p-3">
@@ -103,6 +107,7 @@ export default function Kanbas() {
           </Routes>
         </div>
       </div>
+      </Session>
     </Provider>
   );
 }
