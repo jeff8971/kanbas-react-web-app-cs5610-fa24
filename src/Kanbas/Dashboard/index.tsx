@@ -24,6 +24,7 @@ export default function Dashboard({
 
   const [showAllCourses, setShowAllCourses] = useState(false);
   const [filteredCourses, setFilteredCourses] = useState<any[]>([]);
+  const [courseIdsEnrolled, setCourseIdsEnrolled]: any = useState([]);
 
   useEffect(() => {
     if (currentUser) {
