@@ -1,14 +1,13 @@
-import { useState } from "react";
-import { BsGripVertical } from "react-icons/bs";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { MdDelete } from "react-icons/md";
-import { MdCheckCircle } from "react-icons/md";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BsGripVertical, BsPencilSquare, BsThreeDotsVertical } from "react-icons/bs";
+import { MdDelete, MdCheckCircle } from "react-icons/md";
+import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { deleteAssignment, setAssignments } from "./reducer";
 import Controls from "./Controls";
 import TitleButtons from "./TitleButtons";
-import LeftControls from "./LeftControls";
-import { deleteAssignment } from "./reducer";
+import AssignmentIcons from "./Icons";
+import * as assignmentsClient from "./client";
 import "./index.css";
 
 interface Assignment {
@@ -22,79 +21,109 @@ interface Assignment {
   multipleModules?: boolean;
 }
 
+const AssignmentItem: React.FC<Assignment & { onDelete: (id: string) => void }> = ({
+  _id,
+  title,
+  course,
+  availableFrom,
+  due,
+  points,
+  multipleModules,
+  onDelete,
+}) => {
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  }
+
+  return (
+    <li className="wd-lesson list-group-item p-3 ps-1" style={{ borderLeft: "4px solid green" }}>
+      <Link
+        to={`/Kanbas/Courses/${course}/Assignments/${_id}`}
+        className="d-flex align-items-center flex-grow-1 text-decoration-none"
+        style={{ color: "inherit" }}
+      >
+        <div className="d-flex align-items-center flex-grow-1">
+          <BsGripVertical className="me-2 fs-3" />
+          <BsPencilSquare className="me-3" />
+          <span className="d-inline-block">
+            <b>{title}</b>
+            <div style={{ marginLeft: "0", fontSize: "0.8em" }}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                {multipleModules && (
+                  <div style={{ color: "red" }}>
+                    <strong>Multiple Modules</strong>
+                  </div>
+                )}
+                <div style={{ marginLeft: "10px" }}>
+                  | <strong>Not available until</strong> {formatDate(availableFrom)}
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div>
+                  <strong>Due</strong> {formatDate(due)}
+                </div>
+                <div style={{ marginLeft: "10px" }}>|</div>
+                <div style={{ marginLeft: "10px" }}>{points} pts</div>
+              </div>
+            </div>
+          </span>
+          <div style={{ marginLeft: "auto" }}>
+            <AssignmentIcons
+              onDelete={async () => {
+                onDelete(_id);
+              }}
+            />
+          </div>
+        </div>
+      </Link>
+    </li>
+  );
+};
+
 export default function Assignments() {
   const { cid } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const [filteredAssignments, setFilteredAssignments] = useState<Assignment[]>(
-    assignments.filter((assignment: Assignment) => assignment.course === cid)
-  );
 
-  // Handle delete action with confirmation
+  const fetchAssignments = async () => {
+    const courseAssignments = await assignmentsClient.fetchAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(courseAssignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
+
   const handleDelete = (assignmentId: string) => {
     if (window.confirm("Are you sure you want to delete this assignment?")) {
       dispatch(deleteAssignment(assignmentId));
-      setFilteredAssignments(filteredAssignments.filter((a) => a._id !== assignmentId));
     }
   };
 
   return (
-    <div id="wd-assignments" className="container mt-4">
+    <div id="wd-assignments">
       <Controls />
-      <ul id="wd-container" className="list-group rounded-0">
-        <li className="wd-assignment list-group-item p-0 mb-4 border-gray">
-          <div
-            id="wd-assignments-title"
-            className="d-flex justify-content-between align-items-center bg-secondary p-2"
-          >
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="me-2 fs-4" />
-              <p className="m-0 fw-bold">ASSIGNMENTS</p>
-            </div>
+      <br />
+      <ul id="wd-modules" className="list-group rounded-0">
+        <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
+          <div className="wd-title p-3 ps-2 bg-secondary d-flex align-items-center">
+            <BsGripVertical className="me-2 fs-3" />
+            <p className="m-0 fw-bold">ASSIGNMENTS</p>
             <TitleButtons />
           </div>
           <ul className="wd-assignment-list list-group rounded-0">
-            {filteredAssignments.map((assignment: Assignment) => (
-              <li
+            {assignments.map((assignment: Assignment) => (
+              <AssignmentItem
                 key={assignment._id}
-                className="wd-assignment-list-item list-group-item p-2 d-flex justify-content-between align-items-center"
-              >
-                <div className="d-flex align-items-start">
-                  <LeftControls />
-                  <div className="my-2 mx-3">
-                    <Link
-                      to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-                      className="wd-assignment-link text-decoration-none fw-bold"
-                    >
-                      {assignment.title}
-                    </Link>
-                    <p className="m-0 fs-6 text-muted">
-                      {assignment.multipleModules && (
-                        <>
-                          <span className="text-danger">Multiple Modules</span> |{" "}
-                        </>
-                      )}
-                      <strong>Not available until</strong>{" "}
-                      {new Date(assignment.availableFrom).toLocaleDateString()} |{" "}
-                      <br />
-                      <strong>Due</strong>{" "}
-                      {new Date(assignment.due).toLocaleDateString()} |{" "}
-                      {assignment.points} pts
-                    </p>
-                  </div>
-                </div>
-                <div className="d-flex align-items-center gap-3">
-                  <MdCheckCircle className="fs-4 text-success" />
-                  <BsThreeDotsVertical className="fs-4 text-muted" />
-                  <MdDelete
-                    className="fs-4 text-danger"
-                    onClick={() => handleDelete(assignment._id)}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-              </li>
+                {...assignment}
+                onDelete={handleDelete}
+              />
             ))}
           </ul>
         </li>

@@ -1,11 +1,10 @@
 import { FaPlus } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 export default function AssignmentsControls() {
   const { cid } = useParams();
-  const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   return (
@@ -22,13 +21,13 @@ export default function AssignmentsControls() {
           id="wd-search-assignment"
           placeholder="Search..."
           className="form-control"
-          style={{ paddingLeft: "40px", backgroundColor: "transparent" }}
+          style={{ paddingLeft: "50px", backgroundColor: "transparent" }}
         />
         <span
           className="input-group-text"
           style={{
             position: "absolute",
-            left: "10px",
+            left: "5px",
             top: "50%",
             transform: "translateY(-50%)",
             backgroundColor: "transparent",
@@ -38,24 +37,24 @@ export default function AssignmentsControls() {
           <GoSearch />
         </span>
       </div>
-      {currentUser?.role === "FACULTY" && (
-        <div className="d-flex">
-          <button
-            id="wd-add-assignment-group"
-            className="btn btn-lg btn-secondary me-2"
-          >
-            <FaPlus className="me-2 mb-1" />
-            Group
-          </button>
-          <button
-            className="btn btn-lg btn-danger"
-            onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments/New`)}
-          >
-            <FaPlus className="me-2 mb-1" />
-            Assignment
-          </button>
-        </div>
-      )}
+      {currentUser.role === 'FACULTY' && (
+                <>
+                    <div className="d-line me-1" style={{ marginLeft: "auto" }}>
+                        <button id="wd-collepse-all" className="btn btn-lg btn-secondary">
+                            <FaPlus className="position-relative me-1" style={{ bottom: "1px" }} />
+                            Group
+                        </button>
+                    </div>
+                    <div className="d-line me-1">
+                        <a href={`#/Kanbas/Courses/${cid}/Assignments/New`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                            <button id="wd-view-progress" className="btn btn-lg btn-danger">
+                                <FaPlus className="position-relative me-1" style={{ bottom: "1px" }} />
+                                Assignment
+                            </button>
+                        </a>
+                    </div>
+                </>
+            )}
     </div>
   );
 }
