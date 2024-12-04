@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { addAssignment, updateAssignment } from "./reducer"; // Assuming you've created this in reducer.ts
+import * as assignmentsClient from "./client";
 
 interface Assignment {
   _id: string;
@@ -36,14 +37,18 @@ export default function AssignmentEditor() {
 
   const [assignment, setAssignment] = useState<Assignment>(existingAssignment || defaultAssignment);
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    const savedAssignment = await assignmentsClient.upsertAssignment(assignment);
     if (existingAssignment) {
-      dispatch(updateAssignment(assignment));
+        dispatch(updateAssignment(savedAssignment));
     } else {
-      dispatch(addAssignment(assignment));
+        dispatch(addAssignment(savedAssignment));
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
+
+
+
 
   if (!assignment) {
     return <div>Assignment not found</div>; // Fallback if assignment doesn't exist

@@ -100,11 +100,11 @@ export default function Assignments() {
     fetchAssignments();
   }, [cid]);
 
-  const handleDelete = (assignmentId: string) => {
-    if (window.confirm("Are you sure you want to delete this assignment?")) {
-      dispatch(deleteAssignment(assignmentId));
-    }
+  const handleDelete = async (assignmentId: string) => {
+    dispatch(deleteAssignment(assignmentId));
+    await assignmentsClient.deleteAssignment(assignmentId);
   };
+
 
   return (
     <div id="wd-assignments">
