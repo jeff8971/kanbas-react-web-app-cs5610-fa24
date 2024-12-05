@@ -4,10 +4,11 @@ const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignment`;
 
 export const fetchAssignmentsForCourse = async (courseId: string) => {
-    const response = await axios.get(`${ASSIGNMENTS_API}/course/${courseId}`);
 
+    const response = await axios.get(`${ASSIGNMENTS_API}/course/${courseId}`);
     return response.data;
-}
+
+};
 
 export const retrieveAssignment = async (assignmentId: string) => {
     const response = await axios.get(`${ASSIGNMENTS_API}/${assignmentId}`);
@@ -22,23 +23,26 @@ export const deleteAssignment = async (assignmentId: string) => {
 };
 
 export const upsertAssignment = async (assignment: any) => {
-    const a = await retrieveAssignment(assignment._id);
-
-    if (a === "") {
-        return await createAssignment(assignment);
-    } else {
-        return await updateAssignment(assignment)
+    const existingAssignment = await retrieveAssignment(assignment._id);
+    if (existingAssignment) {
+        return await updateAssignment(assignment);
     }
+    return await createAssignment(assignment);
 };
 
-export const createAssignment = async (assignment: any) => {
-    const response = await axios.post(`${ASSIGNMENTS_API}`, assignment);
 
+export const createAssignment = async (assignment: any) => {
+
+    console.log("Creating assignment with payload:", assignment);
+    const response = await axios.post(`${ASSIGNMENTS_API}`, assignment);
     return response.data;
+
 };
 
 export const updateAssignment = async (assignment: any) => {
-    const { data } = await axios.put(`${ASSIGNMENTS_API}/${assignment._id}`, assignment);
 
-    return data;
+    console.log("Updating assignment with payload:", assignment);
+    const response = await axios.put(`${ASSIGNMENTS_API}/${assignment._id}`, assignment);
+    return response.status === 204 ? assignment : response.data;
+
 };
