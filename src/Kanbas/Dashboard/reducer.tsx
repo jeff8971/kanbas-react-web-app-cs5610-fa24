@@ -12,12 +12,12 @@ const enrollmentsSlice = createSlice({
         addEnrollment: (state, { payload }) => {
             const { courseId, userId } = payload;
             const newEnrollment = {
-                "_id": new Date().getTime().toString(),
+                "_id": courseId,
                 "user": userId,
                 "course": courseId
             };
 
-            state.enrollments = [...state.enrollments, newEnrollment];
+            state.enrollments = [...state.enrollments, newEnrollment]
         },
         removeEnrollment: (state, { payload }) => {
             const { courseId, userId } = payload;
