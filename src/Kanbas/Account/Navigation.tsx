@@ -1,32 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import { Link, useLocation } from "react-router-dom";
 export default function AccountNavigation() {
-    const location = useLocation();
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
-
-    const links = currentUser ? [{ name: "Profile", path: "/Kanbas/Account/Profile" }]
-        : [
-            { name: "Sign in", path: "/Kanbas/Account/Signin" },
-            { name: "Sign up", path: "/Kanbas/Account/Signup" }
-        ];
-
-    const isActive = (path: string) => location.pathname.includes(path);
-
-    return (
-        <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
-            {links.map(link => (
-                <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`list-group-item border border-0 ${isActive(link.path) ? 'active' : 'text-danger'}`}>
-                    {link.name}
-                </Link>
-            ))}
-            {currentUser && currentUser.role === "ADMIN" && (
-                <Link to={`/Kanbas/Account/Users`} className={`list-group-item border border-0 ${isActive("Users") ? 'active' : 'text-danger'}`}>Users</Link>
-            )}
-            < br />
-        </div>
-    );
-}
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  const { pathname } = useLocation();
+  return (
+    <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
+      {links.map((elem) => (<Link to={`/Kanbas/Account/${elem}`} 
+        className={`list-group-item ${pathname.includes(elem) ? "active" : "text-danger"} border border-0`}>{elem}</Link>))}
+    </div>
+);}
