@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer"; // Import the action to update currentUser in the Redux store
 
 export default function Profile() {
+  const [profile, setProfile] = useState<any>({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -13,7 +14,7 @@ export default function Profile() {
     dispatch(setCurrentUser(updatedProfile));
   };
 
-  const [profile, setProfile] = useState<any>({});
+
 
   // Fetch profile data when the component mounts or currentUser changes
   useEffect(() => {

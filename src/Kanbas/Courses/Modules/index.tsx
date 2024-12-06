@@ -14,7 +14,7 @@ export default function Modules() {
   const { cid } = useParams();
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const [moduleName, setModuleName] = useState("");
-
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
   const fetchModules = async () => {
       const modules = await coursesClient.findModulesForCourse(cid as string);
@@ -49,7 +49,7 @@ export default function Modules() {
                   .map((module: any) => (
                       <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
                           <div className="wd-title p-3 ps-2 bg-secondary">
-                              <BsGripVertical className="me-2 fs-3" />
+                          {currentUser.role === "FACULTY" && <BsGripVertical className="me-2 fs-3" />}
                               {!module.editing && module.name}
                               {module.editing && (
                                   <input className="form-control w-50 d-inline-block"
