@@ -65,18 +65,17 @@ export default function Modules() {
                                       }}
                                       value={module.name} />
                               )}
-                              <ModuleControlButtons
-                                  deleteModule={(moduleId) => removeModule(moduleId)}
-                                  editModule={(moduleId) => dispatch(editModule(moduleId))}
-                                  moduleId={module._id} />
+                              {currentUser.role === "FACULTY" && <ModuleControlButtons moduleId={module._id} 
+                                deleteModule={(moduleId) => removeModule(moduleId)}
+                                editModule={(moduleId) => dispatch(editModule(moduleId))}/>}
                           </div>
                           {module.lessons && (
                               <ul className="wd-lessons list-group rounded-0">
                                   {module.lessons.map((lesson: any) => (
                                       <li className="wd-lesson list-group-item p-3 ps-1">
-                                          <BsGripVertical className="me-2 fs-3" />
+                                          {currentUser.role === "FACULTY" && <BsGripVertical className="me-2 fs-3" />}
                                           {lesson.name}
-                                          <LessonControlButtons />
+                                          {currentUser.role === "FACULTY" && <LessonControlButtons/>}
                                       </li>
                                   ))}
                               </ul>
