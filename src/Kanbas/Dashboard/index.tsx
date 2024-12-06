@@ -44,6 +44,8 @@ export default function Dashboard(
         return text;
     }
 
+    
+
     return (
         <div id="wd-dashboard">
             <h1 id="wd-dashboard-title">
