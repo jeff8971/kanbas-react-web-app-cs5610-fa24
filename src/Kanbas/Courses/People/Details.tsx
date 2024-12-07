@@ -16,19 +16,15 @@ export default function PeopleDetails() {
 
     const saveUser = async () => {
         const [firstName, lastName] = name.split(" ");
-
         if (firstName === "" || firstName === undefined) {
             setEditing(false);
-
             return;
         }
-
         const updatedUser = { ...user, firstName, lastName };
-
         await client.updateUser(updatedUser);
-
         setUser(updatedUser);
         setEditing(false);
+        navigate(-1);
     };
 
     const saveEmail = async () => {
@@ -38,6 +34,7 @@ export default function PeopleDetails() {
 
         setUser(updatedUser);
         setEditing(false);
+        navigate(-1);
     }
 
     const saveRole = async () => {
@@ -47,6 +44,7 @@ export default function PeopleDetails() {
 
         setRole(updatedUser);
         setEditing(false);
+        navigate(-1);
     }
 
     const saveAll = async () => {
@@ -56,7 +54,9 @@ export default function PeopleDetails() {
 
     const deleteUser = async (uid: string) => {
         await client.deleteUser(uid);
+        navigate(-1);
     };
+    
 
     const fetchUser = async () => {
         if (!uid) {
@@ -77,20 +77,12 @@ export default function PeopleDetails() {
 
     return (
         <div className="wd-people-details position-fixed top-0 end-0 bottom-0 bg-white p-4 shadow w-25">
-            <hr />
-            <button onClick={() => { setEditing(false); deleteUser(uid); navigate(-1); }} className="btn btn-danger float-end wd-delete" >
-                Delete
-            </button>
-            <button onClick={() => { setEditing(false); navigate(-1); }} className="btn btn-secondary float-start float-end me-2 wd-cancel" >
-                Cancel
-            </button>
-            <button onClick={() => navigate(-1)} className="btn position-fixed end-0 top-0 wd-close-details"><IoCloseSharp className="fs-1" />
-            </button>
             <div
                 className="text-center mt-2"> <FaUserCircle className="text-secondary me-2 fs-1" />
             </div>
-            <hr />
-            <b>Name:</b>{" "}
+            <hr/>
+            
+            <div className="text-danger fs-4 wd-name">
             {!editing && (
                 <FaPencil onClick={() => setEditing(true)} className="float-end fs-5 mt-2 wd-edit" />)
             }
@@ -105,6 +97,8 @@ export default function PeopleDetails() {
                     <br />
                 </>
             )}
+            </div>
+
             {user && editing && (
                 <input className="form-control w-100 wd-edit-name"
                     defaultValue={`${user.firstName} ${user.lastName}`}
@@ -182,6 +176,18 @@ export default function PeopleDetails() {
             <br />
             <b>Total Activity:</b>{" "}
             <span className="wd-total-activity">{user.totalActivity}</span>
+
+
+
+            <hr />
+            <button onClick={() => { setEditing(false); deleteUser(uid); navigate(-1); }} className="btn btn-danger float-end wd-delete" >
+                Delete
+            </button>
+            <button onClick={() => { setEditing(false); navigate(-1); }} className="btn btn-secondary float-start float-end me-2 wd-cancel" >
+                Cancel
+            </button>
+            <button onClick={() => navigate(-1)} className="btn position-fixed end-0 top-0 wd-close-details"><IoCloseSharp className="fs-1" />
+            </button>
         </div >
     );
 }

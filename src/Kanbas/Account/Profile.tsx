@@ -13,17 +13,11 @@ export default function Profile() {
     const updatedProfile = await client.updateUser(profile);
     dispatch(setCurrentUser(updatedProfile));
   };
-
-
-
-  // Fetch profile data when the component mounts or currentUser changes
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/Kanbas/Account/Signin");
-    } else {
-      setProfile(currentUser);
-    }
-  }, [currentUser, navigate]);
+  
+  const fetchProfile = () => {
+    if (!currentUser) return navigate("/Kanbas/Account/Signin");
+    setProfile(currentUser);
+  };
 
   const signout = async () => {
     await client.signout();
@@ -31,6 +25,7 @@ export default function Profile() {
     navigate("/Kanbas/Account/Signin");
   };
 
+  useEffect(() => { fetchProfile(); }, []);
 
   return (
     <div id="wd-profile-screen" style={{ width: "400px" }}>
