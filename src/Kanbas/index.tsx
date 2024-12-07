@@ -33,7 +33,7 @@ export default function Kanbas() {
     setCourses([...courses, newCourse]);
   };
 
-  const findAllCourses = async () => {
+  const fetchCourses = async () => {
     let courses = [];
     try {
         courses = await courseClient.fetchAllCourses();
@@ -43,7 +43,7 @@ export default function Kanbas() {
     setCourses(courses);
     };
     useEffect(() => {
-        findAllCourses();
+        fetchCourses();
     }, [currentUser]);
 
 
