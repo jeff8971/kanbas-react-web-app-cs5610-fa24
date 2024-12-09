@@ -10,7 +10,7 @@ import WorkingWithArraysAsynchronously from "./WorkingWithArraysAsynchronously";
 
 
 
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+const REMOTE_SERVER = process.env.NODE_SERVER_DOMAIN;
 
 export default function Lab5() {
     return (

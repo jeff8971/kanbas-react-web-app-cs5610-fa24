@@ -1,6 +1,6 @@
 import axios from "axios";
 const axiosWithCredentials = axios.create({withCredentials: true });
-export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+export const REMOTE_SERVER = process.env.NODE_SERVER_DOMAIN;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 
 

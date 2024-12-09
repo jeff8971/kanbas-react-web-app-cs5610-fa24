@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+const REMOTE_SERVER = process.env.NODE_SERVER_DOMAIN;
 const ASSIGNMENTS_API = `${REMOTE_SERVER}/api/assignment`;
 
 export const fetchAssignmentsForCourse = async (courseId: string) => {
