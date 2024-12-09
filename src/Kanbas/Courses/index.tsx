@@ -3,19 +3,27 @@ import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
+import * as assignmentsClient from "../Courses/Assignments/client"
+import { upsertAssignment } from "./Assignments/reducer";
 import PeopleTable from "./People/Table";
 import { FaAlignJustify } from "react-icons/fa";
 import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
+import { useDispatch } from "react-redux";
 
 export default function Courses({ courses }: { courses: any[] }) {
   const { cid } = useParams();
   const location = useLocation();
   const course = courses.find((course) => course._id === cid);
-
+  const dispatch = useDispatch();
   // Determine the section name based on the current route path
   const section = location.pathname.split("/").pop();
   const sectionName = section ? section.charAt(0).toUpperCase() + section.slice(1) : "Course";
 
+
+  const handleUpsertAssignment = async (assignment: any) => {
+    await assignmentsClient.upsertAssignment(assignment)
+    dispatch(upsertAssignment(assignment));
+  };
   return (
     <div id="wd-courses">
       {/* Top breadcrumb header */}
@@ -43,7 +51,7 @@ export default function Courses({ courses }: { courses: any[] }) {
             <Route path="Home" element={<Home />} />
             <Route path="Modules" element={<Modules />} />
             <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="Assignments/:aid" element={<AssignmentEditor upsertAssignment={handleUpsertAssignment} />} />
             <Route path="People" element={<PeopleTable />} />
           </Routes>
         </div>

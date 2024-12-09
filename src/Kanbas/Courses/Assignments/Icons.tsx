@@ -8,19 +8,16 @@ export default function AssignmentIcons({ onDelete }: { onDelete: () => void; })
 
     const handleDeleteClick = (event: any) => {
         event.preventDefault()
-
         const confirmDelete = window.confirm("Are you sure that you want to delete this assignment?");
-
         if (confirmDelete) {
             onDelete();
         }
     };
 
     return (
-
         <div className="d-flex align-items-center checkmark-container">
             <SpacedGreenCheckmark />
-            {currentUser.role === 'FACULTY' && <FaTrash
+            {(currentUser.role === 'FACULTY' || currentUser.role === 'ADMIN') && <FaTrash
                 className="fs-4 me-3 text-danger"
                 onClick={handleDeleteClick}
                 style={{ cursor: 'pointer' }}

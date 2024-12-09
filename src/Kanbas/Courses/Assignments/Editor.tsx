@@ -1,58 +1,30 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { RxCross2 } from "react-icons/rx";
-import { addAssignment, updateAssignment } from "./reducer"; // Assuming you've created this in reducer.ts
+import { useEffect, useState } from "react";
 import * as assignmentsClient from "./client";
+import { FaXmark } from "react-icons/fa6";
 
-interface Assignment {
-  _id: string;
-  title: string;
-  course: string | undefined;
-  description: string;
-  points: number;
-  due: string;
-  availableFrom: string;
+
+
+export default function AssignmentEditor({ upsertAssignment }: { upsertAssignment: (assignment: any) => void; }) {
+  const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
+  const [assignment, setAssignment] = useState<any>(undefined);
+  const fetchAssignment = async () => {
+    const fetchedAssignment = await assignmentsClient.retrieveAssignment(aid as string);
+    setAssignment(fetchedAssignment);
+  };
+  useEffect(() => {
+      fetchAssignment();
+  }, []);
+
+  if (assignment === undefined) {
+    return (
+        <div id="wd-assignments-editor-loading">
+            Fetching assignment...
+        </div>
+    )
 }
 
-export default function AssignmentEditor() {
-  const { cid, aid } = useParams(); // Get course ID and assignment ID from the URL
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-
-  const existingAssignment = assignments.find(
-    (assignment: Assignment) => assignment._id === aid && assignment.course === cid
-  );
-
-  const defaultAssignment: Assignment = {
-    _id: "A" + Math.floor(100 + Math.random() * 900),
-    title: "New Assignment",
-    course: cid,
-    description: "New Assignment Description",
-    points: 100,
-    due: "2024-12-31",
-    availableFrom: "2024-01-01",
-  };
-
-  const [assignment, setAssignment] = useState<Assignment>(existingAssignment || defaultAssignment);
-
-  const handleSave = async () => {
-    const savedAssignment = await assignmentsClient.upsertAssignment(assignment);
-    if (existingAssignment) {
-        dispatch(updateAssignment(savedAssignment));
-    } else {
-        dispatch(addAssignment(savedAssignment));
-    }
-    navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  };
-
-
-
-
-  if (!assignment) {
-    return <div>Assignment not found</div>; // Fallback if assignment doesn't exist
-  }
 
   return (
     <div className="form-group" id="assignment-editor">
@@ -66,7 +38,9 @@ export default function AssignmentEditor() {
           value={assignment.title}
           className="form-control mb-4"
           onChange={(e) =>
-            setAssignment((prev: Assignment) => ({ ...prev, title: e.target.value }))
+            setAssignment((previousAssignment: any) => ({
+              ...previousAssignment,
+              title: e.target.value }))
           }
         />
         <textarea
@@ -76,7 +50,9 @@ export default function AssignmentEditor() {
           className="form-control w-100"
           value={assignment.description}
           onChange={(e) =>
-            setAssignment((prev: Assignment) => ({ ...prev, description: e.target.value }))
+            setAssignment((previousAssignment: any) => ({
+              ...previousAssignment,
+              description: e.target.value }))
           }
         />
       </div>
@@ -95,7 +71,9 @@ export default function AssignmentEditor() {
               className="form-control"
               value={assignment.points}
               onChange={(e) =>
-                setAssignment((prev: Assignment) => ({ ...prev, points: Number(e.target.value) }))
+                setAssignment((previousAssignment: any) => ({
+                  ...previousAssignment,
+                  description: e.target.value }))
               }
             />
           </div>
@@ -191,9 +169,11 @@ export default function AssignmentEditor() {
             </label>
           </div>
           <div className="col-10 border rounded p-3">
-            <div className="d-flex justify-content-between align-items-center bg-custom-gray" style={{ width: "120px" }}>
-              <p className="m-0 px-2">Everyone</p>
-              <RxCross2 className="me-2 fs-6 text-dark" />
+            <div className="input-group">
+                <button className="btn btn-light">
+                    Everyone<FaXmark style={{ marginTop: '-2px', marginLeft: '10px' }}></FaXmark>
+                </button>
+                <input id="wd-assign-to" type="text" className="form-control" />
             </div>
 
             <label className="form-label mt-3 fw-bold" htmlFor="due-date">
@@ -205,7 +185,9 @@ export default function AssignmentEditor() {
               value={assignment.due}
               className="form-control"
               onChange={(e) =>
-                setAssignment((prev: Assignment) => ({ ...prev, due: e.target.value }))
+                setAssignment((previousAssignment: any) => ({
+                  ...previousAssignment,
+                  description: e.target.value }))
               }
             />
 
@@ -220,7 +202,9 @@ export default function AssignmentEditor() {
                   value={assignment.availableFrom}
                   className="form-control"
                   onChange={(e) =>
-                    setAssignment((prev: Assignment) => ({ ...prev, availableFrom: e.target.value }))
+                    setAssignment((previousAssignment: any) => ({
+                      ...previousAssignment,
+                      description: e.target.value }))
                   }
                 />
               </div>
@@ -235,7 +219,9 @@ export default function AssignmentEditor() {
                   value={assignment.due}
                   className="form-control"
                   onChange={(e) =>
-                    setAssignment((prev: Assignment) => ({ ...prev, due: e.target.value }))
+                    setAssignment((previousAssignment: any) => ({
+                      ...previousAssignment,
+                      description: e.target.value }))
                   }
                 />
               </div>
@@ -250,9 +236,12 @@ export default function AssignmentEditor() {
         <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-secondary">
           Cancel
         </Link>
-        <button onClick={handleSave} className="btn btn-danger">
-          Save
-        </button>
+        <Link to={`/Kanbas/Courses/${cid}/Assignments`} className="btn btn-danger float-end ms-2"
+            onClick={() => {
+                upsertAssignment(assignment)
+            }}>
+            Save
+        </Link>
       </div>
     </div>
   );

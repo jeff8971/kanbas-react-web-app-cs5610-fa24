@@ -18,7 +18,7 @@ export default function Kanbas() {
     const defaultCourse = {
         name: "New Course",
         number: "New Number",
-        startDate: "2024-09-10",
+        startDate: "2024-09-01",
         endDate: "2024-12-15",
         department: "New Department",
         description: "New Description",
@@ -40,13 +40,7 @@ export default function Kanbas() {
         setCourse(defaultCourse);
     };
 
-    useEffect(() => {
-        if (enrolling) {
-            fetchCourses();
-        } else {
-            findCoursesForUser();
-        }
-    }, [currentUser, enrolling]);
+    
     const findCoursesForUser = async () => {
         try {
             const courses = await userClient.findCoursesForUser(currentUser._id);
@@ -56,6 +50,15 @@ export default function Kanbas() {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        if (enrolling) {
+            fetchCourses();
+        } else {
+            findCoursesForUser();
+        }
+    }, [currentUser, enrolling]);
+
     const updateEnrollment = async (courseId: string, enrolled: boolean) => {
         if (enrolled) {
             dispatch(addEnrollment({ courseId: courseId, userId: currentUser._id }));
