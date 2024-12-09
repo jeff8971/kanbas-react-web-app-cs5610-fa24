@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const REMOTE_SERVER = process.env.REACT_APP_NODE_SERVER_DOMAIN;
+const REMOTE_SERVER = process.env.REACT_APP_SERVER_DOMAIN;
 
 export default function WorkingWithObjects() {
     const [assignment, setAssignment] = useState({
