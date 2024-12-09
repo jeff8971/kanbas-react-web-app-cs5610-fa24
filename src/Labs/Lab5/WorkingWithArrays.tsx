@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 export default function WorkingWithArrays() {
-    const REMOTE_SERVER = process.env.NODE_SERVER_DOMAIN;
+    const REMOTE_SERVER = process.env.REACT_APP_NODE_SERVER_DOMAIN;
     const API = `${REMOTE_SERVER}/lab5/todos`;
 
     const [todo, setTodo] = useState({
