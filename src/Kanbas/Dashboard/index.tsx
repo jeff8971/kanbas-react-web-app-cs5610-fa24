@@ -109,7 +109,7 @@ export default function Dashboard(
                                             style={{ height: '160px', objectFit: 'cover', textDecoration: "none", color: "navy", fontWeight: "bold" }}
                                             width="100%"
                                             alt={course.name}
-                                            src='images/reactjs.jpg'
+                                            src='https://d15gkqt2d16c1n.cloudfront.net/images/universities/logos/Northeastern_University,_Portland_Logo'
                                         />
                                         <div className="card-body" style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                                             <h5 className="wd-dashboard-course-title card-title" style={{ color: 'darkblue' }}>
