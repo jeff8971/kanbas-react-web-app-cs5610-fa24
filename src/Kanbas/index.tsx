@@ -33,8 +33,12 @@ export default function Kanbas() {
     const dispatch = useDispatch();
 
     const addNewCourse = async () => {
+        if (!currentUser?._id) {
+            console.error("Cannot add a course. Current user is not defined.");
+            return;
+        }
         const newCourse = await courseClient.createCourse(course);
-
+    
         dispatch(addEnrollment({ courseId: newCourse._id, userId: currentUser._id }));
         setCourses([...courses, { ...course, ...newCourse }]);
         setCourse(defaultCourse);
@@ -52,14 +56,23 @@ export default function Kanbas() {
     };
 
     useEffect(() => {
+        if (!currentUser) {
+            console.warn("No current user available.");
+            return;
+        }
         if (enrolling) {
             fetchCourses();
         } else {
             findCoursesForUser();
         }
     }, [currentUser, enrolling]);
+    
 
     const updateEnrollment = async (courseId: string, enrolled: boolean) => {
+        if (!currentUser?._id) {
+            console.error("Cannot update enrollment. Current user is not defined.");
+            return;
+        }
         if (enrolled) {
             dispatch(addEnrollment({ courseId: courseId, userId: currentUser._id }));
             await userClient.enrollIntoCourse(currentUser._id, courseId);
@@ -77,6 +90,7 @@ export default function Kanbas() {
             })
         );
     };
+
     const fetchCourses = async () => {
         try {
             const allCourses = await courseClient.fetchAllCourses();

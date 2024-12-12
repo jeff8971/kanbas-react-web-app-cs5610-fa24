@@ -3,7 +3,7 @@ const axiosWithCredentials = axios.create({withCredentials: true });
 export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 
-
+const isValidObjectId = (id: string) => /^[a-f\d]{24}$/i.test(id);
 
 export const findAllUsers = async () => {
     const response = await axiosWithCredentials.get(USERS_API);
@@ -24,6 +24,9 @@ export const findUsersByRole = async (role: string) => {
   
 
   export const findUserById = async (id: string) => {
+    if (!isValidObjectId(id)) {
+      throw new Error(`Invalid user ID: ${id}`);
+    }
     const response = await axios.get(`${USERS_API}/${id}`);
     return response.data;
   };
