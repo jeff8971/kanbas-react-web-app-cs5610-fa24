@@ -22,7 +22,7 @@ export default function Kanbas() {
         endDate: "2024-12-15",
         department: "New Department",
         description: "New Description",
-        imageurl: "https://logos-world.net/wp-content/uploads/2023/08/React-Logo.png",
+        imageurl: "images/reactjs.jpg",
         credits: 4,
     }
 
