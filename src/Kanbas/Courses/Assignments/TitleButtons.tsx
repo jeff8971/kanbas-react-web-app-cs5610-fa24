@@ -1,15 +1,23 @@
-import { FaPlus } from "react-icons/fa6";
 import { IoEllipsisVertical } from "react-icons/io5";
-
-export default function TitleButtons(){
-  return (
-    <div className="d-flex justify-content-end align-items-center gap-2">
-      <div className="border rounded-pill px-4 py-1 fs-5">
-        40% of total
-      </div>
-      <FaPlus className="fs-4 text-muted" />
-      <IoEllipsisVertical className="fs-4 text-muted" />
-    </div>
-  );
-};
-
+import GreenCheckmark from "./GreenCheckmark";
+import { BsPlusLg } from "react-icons/bs";
+export default function TitleButtons() {
+    return (
+        <div className="float-end">
+            <div className="flex-container">
+                <label
+                    className="form-label pe-2 ps-2 me-3"
+                    style={{
+                        borderRadius: "50px",
+                        borderWidth: "1px",
+                        borderStyle: "solid",
+                    }}
+                >
+                    40% of Total
+                </label>
+                <BsPlusLg className=" me-2 fs-4" />
+                <IoEllipsisVertical className=" me-2 fs-4" />
+            </div>
+        </div>
+    );
+}
