@@ -1,7 +1,7 @@
 import { FaPlus } from "react-icons/fa6";
 import { FaCheckCircle, FaCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-export default function AssControls({ cid }: { cid: any }) {
+export default function AssignmentControls({ cid }: { cid: any }) {
     const tempAssignment = {
         id: new Date().getTime().toString(),
       };
