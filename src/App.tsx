@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Labs from "./labs";
-import Kanbas from "./kanbas";
+import Labs from "./Labs";
+import Kanbas from "./Kanbas";
 import store from "./Kanbas/store";
 import { Provider } from "react-redux";
 import { HashRouter, Link, Navigate, Route, Routes } from "react-router-dom";

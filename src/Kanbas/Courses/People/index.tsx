@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PeopleTable from "./Table";
 import { useParams } from "react-router-dom";
-import * as courseClient from  "../client"
+import * as courseClient from "../../Kanbas/Courses/client";
 
 export default function People() {
     const [users, setUsers] = useState<any[]>([]);

@@ -4,7 +4,7 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
-import * as coursesClient from "../client";
+import * as coursesClient from "../../Kanbas/Courses/client";
 import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import * as modulesClient from "./client";
