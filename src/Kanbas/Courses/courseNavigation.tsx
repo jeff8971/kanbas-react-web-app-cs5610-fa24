@@ -1,5 +1,4 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import PeopleTable from "./People/Table";
 export default function CoursesNavigation() {
   const { cid } = useParams();
   const { pathname } = useLocation();

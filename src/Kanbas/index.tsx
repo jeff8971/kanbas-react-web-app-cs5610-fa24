@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router";
 import Account from "./Account";
 import Dashboard from "./Dashboard/dashboard";
-import KanbasNavigation from "./navigation";
+import KanbasNavigation from "./dashboardNavigation";
 import Courses from "./Courses";
 import "./styles.css";
 import { useEffect, useState } from "react";
