@@ -1,7 +1,7 @@
 import { IoEllipsisVertical, } from 'react-icons/io5';
 import { FaTrash } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
-import SpacedGreenCheckmark from './AssControlButton';
+import SpacedGreenCheckmark from './GreenCheckmark';
 
 export default function AssignmentIcons({ onDelete }: { onDelete: () => void; }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
