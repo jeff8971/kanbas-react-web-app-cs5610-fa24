@@ -1,17 +1,18 @@
-export default function ModuleEditor({
+export default function DeleteWindow({
     dialogTitle,
-    moduleName,
-    setModuleName,
-    addModule,
+    assignmentName,
+    assignmentId,
+    deleteAssignment,
 }: {
     dialogTitle: string;
-    moduleName: string;
-    setModuleName: (name: string) => void;
-    addModule: () => void;
+    assignmentName: string;
+    assignmentId: string;
+    deleteAssignment: (name: string) => void;
 }) {
     return (
         <div
-            id="wd-add-module-dialog"
+            id={`delete-modal-${assignmentId}`}
+            aria-labelledby={`delete-modal-${assignmentId}-label`}
             className="modal fade"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
@@ -32,12 +33,7 @@ export default function ModuleEditor({
                         ></button>
                     </div>
                     <div className="modal-body">
-                        <input
-                            className="form-control"
-                            defaultValue={moduleName}
-                            placeholder="Module Name"
-                            onChange={(e) => setModuleName(String(e.target.value))}
-                        />
+                        <h1 className="form-control">{assignmentName}</h1>
                     </div>
                     <div className="modal-footer">
                         <button
@@ -48,12 +44,12 @@ export default function ModuleEditor({
                             Cancel
                         </button>
                         <button
-                            onClick={addModule}
                             type="button"
                             data-bs-dismiss="modal"
                             className="btn btn-danger"
+                            onClick={() => deleteAssignment(assignmentId)}
                         >
-                            Add Module
+                            Delete
                         </button>
                     </div>
                 </div>
