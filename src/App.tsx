@@ -13,9 +13,9 @@ function App() {
             <Provider store={store}>
                 <div>
                     <Routes>
-                        <Route path="/" element={<Navigate to="Kanbas" />} />
+                        <Route path="/" element={<Navigate to="kanbas" />} />
                         <Route path="/Labs/*" element={<Labs />} />
-                        <Route path="/Kanbas/*" element={<Kanbas />} />
+                        <Route path="/kanbas/*" element={<Kanbas />} />
                     </Routes>
                 </div>
             </Provider>

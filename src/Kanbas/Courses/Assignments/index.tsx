@@ -1,20 +1,19 @@
-import AssignmentControls from "./AssignmentControls";
+
 import { BsGripVertical } from "react-icons/bs";
-import WeekControlButtons from "./WeekControlButtons";
-import AssignmentControlButtons from "./AssignmentControlButtons";
+import { format } from 'date-fns';
+import { setAssignments, deleteAssignment } from "./reducer";
+import { FaTrash } from "react-icons/fa";
 import { GrNotes } from "react-icons/gr";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import AssignmentControls from "./AssignmentControls";
+import WeekControlButtons from "./WeekControlButtons";
+import AssignmentControlButtons from "./AssignmentControlButtons";
 import * as assignmentClient from "./client";
 import * as coursesClient from "../client";
-import { format } from 'date-fns';
-import {
-    setAssignments,
-    deleteAssignment,
-} from "./reducer";
-import { FaTrash } from "react-icons/fa";
-import DeleteDialog from "./DeleteWindow";
+
+import DeleteDialog from "./DeleteWin";
 
 export default function Assignments() {
     const { cid } = useParams();
@@ -38,7 +37,7 @@ export default function Assignments() {
         dispatch(deleteAssignment(assignmentId));
     };
     const date = (date: string) =>{
-        if (date === null) return "NALL";
+        if (date === null) return "N/A";
         return format(new Date(date), 'MMMM do h:mm a');
     }
 
@@ -46,9 +45,6 @@ export default function Assignments() {
     return (
         <div id="wd-assignments">
             <AssignmentControls cid={cid} />
-            <br />
-            <br />
-            <br />
             <br />
             <ul id="wd-assignments" className="list-group rounded-0">
                 <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
@@ -62,9 +58,7 @@ export default function Assignments() {
                             {assignments
                                 .filter(
                                     (assignment: any) =>
-                                        assignment.course === cid
-                                )
-                                .map((assignment: any) => (
+                                        assignment.course === cid).map((assignment: any) => (
                                     <li className=" list-group-item p-3 ps-1">
                                         <div className="row">
                                             <div
@@ -81,7 +75,7 @@ export default function Assignments() {
                                             </div>
                                             <div className="col wd-fg-color-gray ps-0 ms-2">
                                                 <Link
-                                                    to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                                                    to={`/kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                                                     className=" nav-link d-flex flex-row me-2 text-black bg-white"
                                                 >
                                                     {assignment.title}

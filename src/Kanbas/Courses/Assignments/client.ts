@@ -10,8 +10,3 @@ export const updateAassignment = async (assignment: any) => {
     const { data } = await axios.put(`${ASSIG_API}/${assignment._id}`, assignment);
     return data;
 };
-
-export const createAssignment = async (assignment: any) => {
-    const response = await axios.post(ASSIG_API, assignment);
-    return response.data;
-};

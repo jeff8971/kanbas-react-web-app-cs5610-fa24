@@ -2,8 +2,7 @@ import * as client from "./client";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "./reducer"; // Update the path to where setCurrentUser is defined
-import * as db from "../Database";
+import { setCurrentUser } from "./reducer"; 
 
 export default function Signin() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
@@ -11,10 +10,15 @@ export default function Signin() {
   const navigate = useNavigate();
 
   const signin = async () => {
-    const user =  await client.signin(credentials);
-    if (!user) return;
-    dispatch(setCurrentUser(user));
-    navigate("/Kanbas/Dashboard");
+    try {
+        const user = await client.signin(credentials);
+        if (!user) return;
+        dispatch(setCurrentUser(user));
+        navigate("/kanbas/Dashboard");
+    } catch (error) {
+        console.log(error);
+        alert("Invalid username or password");
+    }
   };
 
 
@@ -46,7 +50,7 @@ export default function Signin() {
       </button>
       <Link
         id="wd-signup-link"
-        to="/Kanbas/Account/Signup"
+        to="/kanbas/Account/Signup"
         className="btn btn-secondary w-100"
       >
         Sign up

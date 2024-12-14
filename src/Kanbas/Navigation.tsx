@@ -7,10 +7,10 @@ import { Link, useLocation } from "react-router-dom";
 export default function KanbasNavigation() {
   const { pathname } = useLocation();
   const links = [
-    { label: "Dashboard", path: "/Kanbas/Dashboard", icon: AiOutlineDashboard },
-    { label: "Courses",   path: "/Kanbas/Dashboard", icon: LiaBookSolid },
-    { label: "Calendar",  path: "/Kanbas/Calendar",  icon: IoCalendarOutline },
-    { label: "Inbox",     path: "/Kanbas/Inbox",     icon: FaInbox },
+    { label: "Dashboard", path: "/kanbas/Dashboard", icon: AiOutlineDashboard },
+    { label: "Courses",   path: "/kanbas/Dashboard", icon: LiaBookSolid },
+    { label: "Calendar",  path: "/kanbas/Calendar",  icon: IoCalendarOutline },
+    { label: "Inbox",     path: "/kanbas/Inbox",     icon: FaInbox },
     { label: "Labs",      path: "/Labs",             icon: LiaCogSolid },
   ];
 
@@ -22,7 +22,7 @@ export default function KanbasNavigation() {
         href="https://www.northeastern.edu/"
         className="list-group-item bg-black border-0 text-center">
         <img src="/images/NEU.png" width="75px" /></a>
-        <Link to="/Kanbas/Account" className={`list-group-item text-center border-0 bg-black
+        <Link to="/kanbas/Account" className={`list-group-item text-center border-0 bg-black
             ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
         <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />
         <br />
@@ -36,5 +36,6 @@ export default function KanbasNavigation() {
           {link.label}
         </Link>
       ))}
+
     </div>
 );}

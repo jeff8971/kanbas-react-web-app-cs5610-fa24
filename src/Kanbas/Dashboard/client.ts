@@ -16,8 +16,3 @@ export const addEnrollment = async (courseID: string, userID: string) => {
     const { data } = await axios.post(`${ENROLLMENT_API}/${courseID}/${userID}`);
     return data;
 };
-
-export const fetchMyEnrollments = async (userId: string) => {
-    const response = await axios.get(`${ENROLLMENT_API}/my/${userId}`);
-    return response.data;
-};

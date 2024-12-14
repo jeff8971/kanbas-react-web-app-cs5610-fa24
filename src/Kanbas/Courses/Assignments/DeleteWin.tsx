@@ -1,4 +1,4 @@
-export default function DeleteWindow({
+export default function DeleteWin({
     dialogTitle,
     assignmentName,
     assignmentId,

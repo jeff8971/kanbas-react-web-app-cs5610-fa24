@@ -1,6 +1,4 @@
-
 import { Link, useLocation, useParams } from "react-router-dom";
-import PeopleTable from "./People/Table";
 
 export default function CoursesNavigation() {
   const { cid } = useParams();
@@ -10,7 +8,7 @@ export default function CoursesNavigation() {
 
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((link) => (
-        <Link to={`/Kanbas/Courses/${cid}/${link}`}
+        <Link to={`/kanbas/Courses/${cid}/${link}`}
           className={`list-group-item border border-0
           ${pathname.includes(link) ? "active" : " text-danger"}`}>{link}</Link>
       ))}
