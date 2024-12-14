@@ -21,7 +21,7 @@ export default function Account() {
                 <Route
                   path="/"
                   element={
-                    <Navigate to={currentUser ? "/kanbas/Account/Profile" : "/kanbas/Account/Signin"} />
+                    <Navigate to={currentUser ? "/Kanbas/Account/Profile" : "/Kanbas/Account/Signin"} />
                   }
                 />
                 <Route path="/Signin" element={<Signin />} />

@@ -84,7 +84,7 @@ export default function Dashboard({
                         >
                             <div className="card">
                                 <Link
-                                    to={`/kanbas/Courses/${course._id}/Home`}
+                                    to={`/Kanbas/Courses/${course._id}/Home`}
                                     className="wd-dashboard-course-link text-decoration-none text-dark"
                                 >
                                     <img 
@@ -337,7 +337,7 @@ export default function Dashboard({
 //                             >
 //                                 <div className="card rounded-3 overflow-hidden">
 //                                     <Link
-//                                         to={`/kanbas/Courses/${course._id}/Home`}
+//                                         to={`/Kanbas/Courses/${course._id}/Home`}
 //                                         className="wd-dashboard-course-link text-decoration-none text-dark"
 //                                     >
 //                                         <img

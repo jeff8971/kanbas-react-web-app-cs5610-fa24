@@ -15,14 +15,14 @@ export default function Profile() {
   };
   
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/kanbas/Account/Signin");
+    if (!currentUser) return navigate("/Kanbas/Account/Signin");
     setProfile(currentUser);
   };
 
   const signout = async () => {
     await client.signout();
     dispatch(setCurrentUser(null));
-    navigate("/kanbas/Account/Signin");
+    navigate("/Kanbas/Account/Signin");
   };
 
   useEffect(() => { fetchProfile(); }, []);

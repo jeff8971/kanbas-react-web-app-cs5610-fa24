@@ -75,7 +75,7 @@ export default function Assignments() {
                                             </div>
                                             <div className="col wd-fg-color-gray ps-0 ms-2">
                                                 <Link
-                                                    to={`/kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                                                    to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                                                     className=" nav-link d-flex flex-row me-2 text-black bg-white"
                                                 >
                                                     {assignment.title}

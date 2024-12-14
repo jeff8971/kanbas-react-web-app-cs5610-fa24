@@ -14,7 +14,7 @@ export default function Signin() {
         const user = await client.signin(credentials);
         if (!user) return;
         dispatch(setCurrentUser(user));
-        navigate("/kanbas/Dashboard");
+        navigate("/Kanbas/Dashboard");
     } catch (error) {
         console.log(error);
         alert("Invalid username or password");
@@ -50,7 +50,7 @@ export default function Signin() {
       </button>
       <Link
         id="wd-signup-link"
-        to="/kanbas/Account/Signup"
+        to="/Kanbas/Account/Signup"
         className="btn btn-secondary w-100"
       >
         Sign up

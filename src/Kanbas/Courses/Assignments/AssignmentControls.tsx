@@ -10,7 +10,7 @@ export default function AssignmentControls({ cid }: { cid: any }) {
         <input id="wd-search-assignment" className=" form-control me-2" type="search"
                 placeholder="Search for Assignments" />
         <Link id="wd-add-Assignment-btn" className="btn btn-lg btn-danger me-2 float-end"        
-        to={`/kanbas/Courses/${cid}/Assignments/${tempAssignment.id}`}
+        to={`/Kanbas/Courses/${cid}/Assignments/${tempAssignment.id}`}
         >
             <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
             Assignment</Link>

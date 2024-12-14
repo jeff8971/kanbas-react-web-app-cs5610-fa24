@@ -312,7 +312,7 @@ export default function AssignmentEditor() {
                         console.log(assignment);
                         
                     }}
-                    to={`/kanbas/Courses/${cid}/Assignments`}
+                    to={`/Kanbas/Courses/${cid}/Assignments`}
                 >
                     Save
                 </Link>
@@ -320,7 +320,7 @@ export default function AssignmentEditor() {
                 <Link
                     id="wd-Group"
                     className="btn btn-lg btn-secondary me-2 float-end"
-                    to={`/kanbas/Courses/${cid}/Assignments`}
+                    to={`/Kanbas/Courses/${cid}/Assignments`}
                 >
                     Cancel
                 </Link>
